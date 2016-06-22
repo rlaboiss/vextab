@@ -19,7 +19,8 @@ height = 1200
 radius = 2264
 SIZE = (width, height)
 pygame.init ()
-screen = pygame.display.set_mode (SIZE, pygame.FULLSCREEN)
+#screen = pygame.display.set_mode (SIZE, pygame.FULLSCREEN)
+screen = pygame.display.set_mode (SIZE)
 
 screen.fill ((0, 0, 0))
 dots = pygame.image.load ("dots.png").convert_alpha ()
