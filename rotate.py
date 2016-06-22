@@ -4,6 +4,7 @@ import pygame
 from pygame.locals import *
 import thread
 import random
+import math
 
 def rot_center(image, angle):
     """rotate an image while keeping its center and size"""
@@ -39,8 +40,18 @@ tsamp = int (round (1000. / frate))
 dangle = speed / frate
 
 dots_rot = [None] * 360
+clock_radius = 100
 for i in range (360):
     dots_rot [i] = rot_center (dots, -i)
+    pygame.draw.arc (screen, (0, 0, 255),
+                     (width / 2 - clock_radius, height / 2 - clock_radius,
+                      2 * clock_radius, 2 * clock_radius),
+                     0, 2 * math.pi * i, 10)
+    pygame.draw.arc (screen, (255, 255, 0),
+                     (width / 2 - clock_radius, height / 2 - clock_radius,
+                      2 * clock_radius, 2 * clock_radius),
+                     0, math.pi * i / 180, 10)
+    pygame.display.flip ()
 
 bg_angle = 0
 show = False
