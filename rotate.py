@@ -44,9 +44,9 @@ clock_radius = 100
 for i in range (360):
     dots_rot [i] = rot_center (dots, -i)
     pygame.draw.arc (screen, (0, 0, 255),
-                     (width / 2 - clock_radius, height / 2 - clock_radius,
-                      2 * clock_radius, 2 * clock_radius),
-                     0, 2 * math.pi * i, 10)
+                     (width / 2 - clock_radius + 3, height / 2 - clock_radius + 3,
+                      2 * clock_radius - 6, 2 * clock_radius - 6),
+                     0, 2 * math.pi * i, 4)
     pygame.draw.arc (screen, (255, 255, 0),
                      (width / 2 - clock_radius, height / 2 - clock_radius,
                       2 * clock_radius, 2 * clock_radius),
