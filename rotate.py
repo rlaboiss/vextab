@@ -16,12 +16,11 @@ def rot_center(image, angle):
     return rot_image
 
 width = 1920
-height = 1200
+height = 1080
 radius = 2264
 SIZE = (width, height)
 pygame.init ()
-#screen = pygame.display.set_mode (SIZE, pygame.FULLSCREEN)
-screen = pygame.display.set_mode (SIZE)
+screen = pygame.display.set_mode (SIZE, pygame.NOFRAME)
 
 screen.fill ((0, 0, 0))
 dots = pygame.image.load ("dots.png").convert_alpha ()
