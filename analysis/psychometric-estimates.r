@@ -84,7 +84,7 @@ for (i in seq (1, nrow (obj.stab.psycho))) {
     slope.ci.sup [i] <- ps [6]
 
     ## *** Progress meter
-    cat (sprintf ("\r%s, %6s, %10s, %7s, %4s", sb, bg, st, co, ot))
+    cat (sprintf ("\r%3d: %s, %6s, %10s, %7s, %4s", i, sb, bg, st, co, ot))
     flush (stdout ())
 }
 
