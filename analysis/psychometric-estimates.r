@@ -8,22 +8,14 @@ obj.stab$response.n <- as.numeric (obj.stab$response) - 1
 ### ** First, compose the extensive comnbination of conditions
 obj.stab.psycho <- expand.grid (subject = levels (obj.stab$subject),
                                 background = c ("static", "vection"),
-                                stimulus = c ("object", "horizontal",
-                                              "egocentric"),
+                                stimulus = c ("object", "horizontal"),
                                 chair = c ("upright", "right", "left"),
                                 object = c ("low", "mid", "high"))
 
 ### ** Second, eliminate the non-existent combinations
 obj.stab.psycho <- subset (obj.stab.psycho,
-                           ! ((background == "vection" & chair != "upright")
-                               | ((stimulus == "horizontal"
-                                   | stimulus == "egocentric")
-                                   & (object == "mid" | object == "high"))))
-
-### ** Third, set to NA the conditions with no objects
-idx <- which (obj.stab.psycho$stimulus != "object"
-              & obj.stab.psycho$object == "low")
-obj.stab.psycho$object [idx] <- NA
+                           ! (background == "vection" & chair != "upright")
+                           & ! (stimulus == "horizontal" & object != "low"))
 
 ### * Psychometric parameter estimation
 
