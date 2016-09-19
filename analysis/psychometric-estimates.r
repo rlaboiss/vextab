@@ -141,4 +141,3 @@ par (mar = c (11, 4, 1, 1))
 boxplot (abs (25 * slope) ~ object * chair * background, log = "y",
          data = df, las = 2, ylab = "slope (%/degree)")
 dev.off ()
-
