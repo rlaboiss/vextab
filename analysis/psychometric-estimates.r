@@ -48,11 +48,11 @@ get.psycho <- function (df) {
 ### ** Store values for each condition
 for (i in seq (1, nrow (obj.stab.psycho))) {
     ## *** Get the condition for each factor
-    sb <- obj.stab.psycho [i, "subject"]
-    st <- obj.stab.psycho [i, "stimulus"]
-    bg <- obj.stab.psycho [i, "background"]
-    co <- obj.stab.psycho [i, "chair"]
-    ot <- obj.stab.psycho [i, "object"]
+    sb <- as.character (obj.stab.psycho [i, "subject"])
+    st <- as.character (obj.stab.psycho [i, "stimulus"])
+    bg <- as.character (obj.stab.psycho [i, "background"])
+    co <- as.character (obj.stab.psycho [i, "chair"])
+    ot <- as.character (obj.stab.psycho [i, "object"])
 
     ## *** Create the specific data frame
     df <- subset (obj.stab, subject ==  sb
