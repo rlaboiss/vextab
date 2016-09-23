@@ -43,6 +43,8 @@ db_resp.write ('subject,background,stimulus,chair,'
 db_info = open ('obj-stab-info.csv', 'w')
 db_info.write ('subject,background,stimulus,chair,date,hour\n')
 
+count = 0
+
 for f in info_files:
 
     time_dir = os.path.dirname (f)
@@ -64,8 +66,9 @@ for f in info_files:
 
         s = '%s,%s,%s\n' % (info_str, date_str, time_str)
         db_info.write (s)
-        sys.stdout.write (s)
+        sys.stdout.write (".")
         sys.stdout.flush ()
+        count += 1
 
         d = os.path.dirname (f)
         response = CsvReader (os.path.join (d, 'response.csv'))
@@ -89,3 +92,6 @@ for f in info_files:
 
 db_info.close ()
 db_resp.close ()
+
+sys.stdout.write ("\nProcessed %d sessions\n" % count)
+sys.stdout.flush ()
