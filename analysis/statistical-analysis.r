@@ -30,10 +30,10 @@ for (i in seq (1, 4)) {
 
     } else if (i == 2) {
 
-        ## **** Efect of object shape in vection background
+        ## **** Efect of object shape and background in upright position
         df <- subset (obj.stab.psycho,
-                      stimulus == "object" & background == "vection")
-        fm <- lmer (threshold ~ object.num + (1 | subject), df)
+                      stimulus == "object" & chair == "upright")
+        fm <- lmer (threshold ~ background * object.num + (1 | subject), df)
 
     } else if (i == 3) {
 
