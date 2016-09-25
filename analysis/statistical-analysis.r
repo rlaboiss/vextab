@@ -12,8 +12,8 @@ obj.stab.psycho <- read.csv ("obj-stab-psycho.csv")
 
 ### ** Transform the discrete factor chair and object into numeric
 
-obj.stab.psycho$chair.num <- c (0, 1, -1) [as.numeric (obj.stab.psycho$chair)]
-obj.stab.psycho$object.num <- as.numeric(obj.stab.psycho$object) - 2
+obj.stab.psycho$chair.num <- c (-1, 1, 0) [as.numeric (obj.stab.psycho$chair)]
+obj.stab.psycho$object.num <- c (1, -1, 0) [as.numeric(obj.stab.psycho$object)]
 
 ### ** Tests
 
