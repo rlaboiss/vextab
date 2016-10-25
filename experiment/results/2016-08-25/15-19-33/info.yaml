@@ -3,3 +3,5 @@ background: static
 stimulus: horizontal
 chair: left
 experiment: room-126
+object-side: left
+table-side: left

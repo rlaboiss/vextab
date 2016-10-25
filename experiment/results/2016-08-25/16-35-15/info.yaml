@@ -3,3 +3,5 @@ background: vection
 stimulus: horizontal
 chair: upright
 experiment: room-126
+object-side: left
+table-side: left
