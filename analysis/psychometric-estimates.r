@@ -42,8 +42,8 @@ get.psycho <- function (df) {
 ### * Collect the data
 
 ### ** Initalize the parameter and CI vectors
-(threshold <- threshold.ci.inf <- threshold.ci.sup <-
-     slope <- slope.ci.inf <- slope.ci.sup <- rep (NA, nrow (obj.stab.psycho)))
+threshold <- threshold.ci.inf <- threshold.ci.sup <-
+     slope <- slope.ci.inf <- slope.ci.sup <- rep (NA, nrow (obj.stab.psycho))
 
 ### ** Store values for each condition
 for (i in seq (1, nrow (obj.stab.psycho))) {
