@@ -1,3 +1,6 @@
+obj-stab-psycho.csv: obj-stab-resp.csv psychometric-estimates.r
+	Rscript psychometric-estimates.r
+
 obj-stab-resp.csv: sessions-list.txt
 	if [ "$$(md5sum sessions-list.txt)" != "$$(cat sessions-list.md5)" ] ; then	\
 	    ./build-database.py ;							\
