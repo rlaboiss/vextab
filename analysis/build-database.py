@@ -19,22 +19,15 @@ class CsvReader:
         except:
             self.data = None
 
-### Get the program name and the current directory
+### Get the program name
 prog = os.path.basename (sys.argv [0])
-cur_dir = os.path.dirname (sys.argv [0])
-
-### Get the directory with the results
-results_dir = os.path.join (cur_dir, "..", "experiment", "results")
 
 ### Initialize lists with the column names
 header_response = None
 header_presentation = None
 
 ### Find files
-info_files = []
-for root, dirnames, filenames in os.walk (results_dir):
-    for filename in fnmatch.filter (filenames, 'info.yaml'):
-        info_files.append(os.path.join (root, filename))
+session_dirs = open ('sessions-list.txt').readlines ()
 
 db_resp = open ('obj-stab-resp.csv', 'w')
 db_resp.write ('subject,background,stimulus,chair,'
@@ -45,8 +38,9 @@ db_info.write ('subject,background,stimulus,chair,date,hour\n')
 
 count = 0
 
-for f in info_files:
+for s in session_dirs:
 
+    f = os.path.join (s.rstrip (), 'info.yaml')
     time_dir = os.path.dirname (f)
 
     if os.path.exists (os.path.join (time_dir, 'hide')):
