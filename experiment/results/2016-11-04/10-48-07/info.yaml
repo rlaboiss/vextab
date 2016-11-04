@@ -1,0 +1,7 @@
+experiment: flip-table
+subject: 37
+background: vection
+stimulus: horizontal
+object-side: left
+table-side: right
+chair: upright

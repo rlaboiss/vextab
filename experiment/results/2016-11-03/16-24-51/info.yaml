@@ -1,0 +1,7 @@
+experiment: flip-table
+subject: 35
+background: static
+stimulus: horizontal
+object-side: left
+table-side: right
+chair: upright
