@@ -1,0 +1,7 @@
+experiment: scene-mirror
+subject: 57
+background: static
+stimulus: horizontal
+object-side: right
+table-side: right
+chair: upright
