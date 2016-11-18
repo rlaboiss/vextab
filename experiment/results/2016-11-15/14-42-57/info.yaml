@@ -1,0 +1,7 @@
+experiment: scene-mirror
+subject: 63
+background: vection
+stimulus: horizontal
+object-side: right
+table-side: right
+chair: upright
