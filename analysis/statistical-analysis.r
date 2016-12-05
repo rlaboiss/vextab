@@ -44,7 +44,7 @@ for (i in seq (1, 4)) {
 
     } else {
 
-        ## **** Efect of inclination in satic backaground on horizontal estimation
+        ## **** Efect of inclination in static backaground on horizontal estimation
         df <- subset (obj.stab.psycho,
                       stimulus == "horizontal" & background == "static")
         fm <- lmer (threshold ~ chair.num + (1|subject), df)
