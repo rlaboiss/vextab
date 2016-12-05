@@ -29,18 +29,20 @@ header_presentation = None
 ### Find files
 session_dirs = open ('sessions-list.txt').readlines ()
 
+first_columns = 'subject,experiment,background,stimulus,object.side,table.side,chair'
+
 db_resp = open ('obj-stab-resp.csv', 'w')
-db_resp.write ('subject,background,stimulus,chair,'
-               + 'object,angle,response,reaction.time\n')
+db_resp.write (first_columns + ',object,angle,response,reaction.time\n')
 
 db_info = open ('obj-stab-info.csv', 'w')
-db_info.write ('subject,background,stimulus,chair,date,hour\n')
+db_info.write (first_columns + ',date,hour\n')
 
 count = 0
 
 for s in session_dirs:
 
     f = os.path.join (s.rstrip (), 'info.yaml')
+    sys.stdout.flush ()
     time_dir = os.path.dirname (f)
 
     if os.path.exists (os.path.join (time_dir, 'hide')):
@@ -49,8 +51,13 @@ for s in session_dirs:
     info = yaml.load (open (f, 'r'))
     subject = info  ['subject']
     stimulus = info ['stimulus']
-    info_str = 'S%03d,%s,%s,%s' % (subject, info ['background'], stimulus,
-                                   info ['chair'])
+    info_str = 'S%03d,%s,%s,%s,%s,%s,%s' % (subject,
+                                            info ['experiment'],
+                                            info ['background'],
+                                            stimulus,
+                                            info ['object-side'],
+                                            info ['table-side'],
+                                            info ['chair'])
 
     time_str = os.path.basename (time_dir).replace ('-', ':')
     date_dir = os.path.dirname (time_dir)
