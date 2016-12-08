@@ -167,6 +167,7 @@ fm <- lmer (threshold ~ experiment * background + (1 | subject), new.screen)
 show (anova (fm))
 show (fixef (fm))
 show (ranef (fm))
+
 ### *** Scene mirror
 
 ### **** Select the data
@@ -176,7 +177,7 @@ scene.mirror$subject <- factor (as.character (scene.mirror$subject))
 ### **** Transform the discrete factor object into numeric
 scene.mirror$object.num <- c (1, -1, 0) [as.numeric (scene.mirror$object)]
 
-### ***** Effect of object CG height and secene side
+### **** Effect of object CG height and secene side
 scene.mirror.obj <- subset (scene.mirror, stimulus == "object")
 
 pdf (file = "scene-mirror-object.pdf")
@@ -201,7 +202,8 @@ fm <- lmer (threshold ~ object.num * table.side + (1 | subject),
 show (anova (fm))
 show (fixef (fm))
 show (ranef (fm))
-### ***** Effect of background on horizontal detection
+
+### **** Effect of background on horizontal detection
 scene.mirror.hor <- subset (scene.mirror, stimulus == "horizontal")
 idx <- which (scene.mirror.hor$table.side == "right")
 scene.mirror.hor$threshold [idx] <- -scene.mirror.hor$threshold [idx]
@@ -228,13 +230,14 @@ fm <- lmer (threshold ~ table.side * background + (1 | subject),
 show (anova (fm))
 show (fixef (fm))
 show (ranef (fm))
+
 ### *** Flip table
 
 ### **** Select the data
 flip.table <- subset (obj.stab.psycho, experiment == "flip-table")
 flip.table$subject <- factor (as.character (flip.table$subject))
 
-### ***** Effect of scene side and background on obejct stability
+### **** Effect of scene side and background on object stability
 flip.table.obj <- subset (flip.table, stimulus == "object")
 
 pdf (file = "flip-table-object.pdf")
@@ -259,7 +262,8 @@ fm <- lmer (threshold ~ background * table.side + (1 | subject),
 show (anova (fm))
 show (fixef (fm))
 show (ranef (fm))
-### ***** Effect of scene side and background on horizontal detection
+
+### **** Effect of scene side and background on horizontal detection
 flip.table.hor <- subset (flip.table, stimulus == "horizontal")
 idx <- which (flip.table.hor$table.side == "right")
 flip.table.hor$threshold [idx] <- -flip.table.hor$threshold [idx]
