@@ -271,7 +271,7 @@ flip.table.hor$threshold [idx] <- -flip.table.hor$threshold [idx]
 pdf (file = "flip-table-horizontal.pdf")
 par (mar = c (4, 5, 0.5, 0))
 for (i in c (1, 2)) {
-    boxplot (threshold ~ table.side * background, flip.table.hor,
+    boxplot (threshold ~ background * table.side, flip.table.hor,
              frame = FALSE, las = 1, xlab = "", ylab = boxplot.ylab,
              col = rep (side.col, 2), xaxt = "n",
              pars = list (boxwex  = 0.4, bty = "n"), add = (i == 2))
@@ -280,13 +280,15 @@ for (i in c (1, 2)) {
                  col = "#eeeeee", border = NA)
 }
 axis (1, at = c (1.5, 3.5), tick = FALSE,
-      labels = c ("static background", "rotating background"))
+      labels = c ("table to the left", "table to the right"))
 legend ("topleft", inset = 0.05, pch = 22, pt.cex = 2, pt.bg = side.col,
-        legend = c ("table to the left", "table to the right"))
+        legend = c ("static background", "rotating background"))
 dummy <- dev.off ()
 
-fm <- lmer (threshold ~ background * table.side + (1 | subject),
-            flip.table.hor)
-show (anova (fm))
-show (fixef (fm))
-show (ranef (fm))
+fm <- t.test (threshold ~ background, paired = TRUE,
+              data = subset (flip.table.hor, table.side == "left"))
+show (fm)
+
+fm <- t.test (threshold ~ background, paired = TRUE,
+              data = subset (flip.table.hor, table.side == "right"))
+show (fm)
