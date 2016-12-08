@@ -2,11 +2,11 @@
 ### * Statistical analyses
 
 ### ** Load the necessary libraries
-
 library (lme4)
 library (lmerTest)
 
 ### ** Load the resutls
+obj.stab.psycho <- read.csv ("obj-stab-psycho.csv")
 
 ### ** Boxplot parameters
 obj.col <- c ("pink", "cyan", "wheat")
@@ -15,47 +15,109 @@ side.col <- c ("firebrick1", "deepskyblue")
 boxplot.pars <- list (boxwex  = 0.5, bty = "n")
 boxplot.ylab <- "threshold angle (degrees)"
 
-obj.stab.psycho <- read.csv ("obj-stab-psycho.csv")
+### ** Experiments
 
-### ** Transform the discrete factor chair and object into numeric
+### *** Room 126
 
-obj.stab.psycho$chair.num <- c (-1, 1, 0) [as.numeric (obj.stab.psycho$chair)]
-obj.stab.psycho$object.num <- c (1, -1, 0) [as.numeric(obj.stab.psycho$object)]
+### **** Select the data
+room.126 <- subset (obj.stab.psycho, experiment == "room-126")
 
-### ** Tests
+### **** Transform the discrete factors chair and object into numeric
+room.126$chair.num <- c (-1, 1, 0) [as.numeric (room.126$chair)]
+room.126$object.num <- c (1, -1, 0) [as.numeric(room.126$object)]
 
-### *** Linear mixed models
+### **** Linear mixed models
 
 for (i in seq (1, 4)) {
 
     if (i == 1) {
 
-        ## **** Efect of chair inclination & object shape in static background
-        df <- subset (obj.stab.psycho,
+        ## * Efect of chair inclination & object shape in static background
+        df <- subset (room.126,
                       stimulus == "object" & background == "static")
         fm <- lmer (threshold ~ object.num * chair.num + (1 | subject), df)
+        anova (fm)
+        fixef (fm)
+
+        pdf (file = "room-126-chair-object.pdf")
+        par (mar = c (4, 5, 0.5, 0))
+        for (i in c (1, 2)) {
+            boxplot (threshold ~ object.num * chair.num, df, frame = FALSE,
+                     las = 1, xlab = "", ylab = boxplot.ylab,
+                     xaxt = "n", pars = boxplot.pars,
+                     col = rep (obj.col, 3), add = (i == 2))
+            if (i == 1)
+                polygon (c (3.5, 6.5, 6.5, 3.5), c (0, 0, 100, 100),
+                         col = "#eeeeee", border = NA)
+        }
+        axis (1, at = c (2, 5, 8), tick = FALSE,
+              labels = c ("chair left", "chair upright", "chair right"))
+        legend ("topright", inset = 0.05, pch = 22, pt.cex = 2, pt.bg = obj.col,
+                legend = c ("low object", "mid object", "high object"))
+        dummy <- dev.off ()
 
     } else if (i == 2) {
 
-        ## **** Efect of object shape and background in upright position
-        df <- subset (obj.stab.psycho,
+        ## * Efect of object shape and background in upright position
+        df <- subset (room.126,
                       stimulus == "object" & chair == "upright")
         fm <- lmer (threshold ~ background * object.num + (1 | subject), df)
+        anova (fm)
+        fixef (fm)
+
+        pdf (file = "room-126-background-object.pdf")
+        par (mar = c (4, 5, 0.5, 0))
+        for (i in c (1, 2)) {
+            boxplot (threshold ~ object.num * background, df, frame = FALSE,
+                     las = 1, xlab = "", ylab = boxplot.ylab,
+                     xaxt = "n", pars = boxplot.pars,
+                     col = rep (obj.col, 2), add = (i == 2))
+            if (i == 1)
+                polygon (c (3.5, 6.5, 6.5, 3.5), c (0, 0, 100, 100),
+                         col = "#eeeeee", border = NA)
+        }
+        axis (1, at = c (2, 5), tick = FALSE,
+              labels = c ("static background", "rotating background"))
+        legend ("topright", inset = 0.05, pch = 22, pt.cex = 2, pt.bg = obj.col,
+                legend = c ("low object", "mid object", "high object"))
+        dummy <- dev.off ()
 
     } else if (i == 3) {
 
-        ## **** Efect of background in upright position on horizontal estimation
-        df <- subset (obj.stab.psycho,
+        ## * Efect of background in upright position on horizontal estimation
+        df <- subset (room.126,
                       stimulus == "horizontal" & chair == "upright")
         fm <- lmer (threshold ~ background + (1 | subject), df)
+        anova (fm)
+        fixef (fm)
+
+        pdf (file = "room-126-background-horizontal.pdf")
+        par (mar = c (4, 5, 0.5, 0))
+        boxplot (threshold ~ background, df, frame = FALSE,
+                 las = 1, xlab = "", ylab = boxplot.ylab,
+                 xaxt = "n", pars = list (boxwex  = 0.2, bty = "n"))
+        axis (1, at = c (1, 2), tick = FALSE,
+              labels = c ("static background", "rotating background"))
+        dummy <- dev.off ()
 
     } else {
 
-        ## **** Efect of inclination in static backaground on horizontal estimation
-        df <- subset (obj.stab.psycho,
+        ## * Efect of inclination in static backaground on horizontal estimation
+        df <- subset (room.126,
                       stimulus == "horizontal" & background == "static")
-        fm <- lmer (threshold ~ chair.num + (1|subject), df)
+        df$object <- factor (as.character (df$object))
+        fm <- lmer (threshold ~ chair.num + (1 | subject), df)
+        anova (fm)
+        fixef (fm)
 
+        pdf (file = "room-126-chair-horizontal.pdf")
+        par (mar = c (4, 5, 0.5, 0))
+        boxplot (threshold ~ chair.num, df, frame = FALSE,
+                 las = 1, xlab = "", ylab = boxplot.ylab,
+                 xaxt = "n", pars = list (boxwex  = 0.4, bty = "n"))
+        axis (1, at = seq (1, 3), tick = FALSE,
+              labels = c ("chair left", "chair upright", "chair right"))
+        dummy <- dev.off ()
     }
 
     show (anova (fm))
