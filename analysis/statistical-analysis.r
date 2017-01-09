@@ -26,6 +26,9 @@ room.126 <- subset (obj.stab.psycho, experiment == "room-126")
 room.126$chair.num <- c (-1, 1, 0) [as.numeric (room.126$chair)]
 room.126$object.num <- c (1, -1, 0) [as.numeric(room.126$object)]
 
+### **** Drop subject S066 (it's Corinne Cian!))
+room.126 <- subset (room.126, subject != "S066")
+
 ### **** Linear mixed models
 
 for (i in seq (1, 4)) {
