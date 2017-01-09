@@ -182,8 +182,11 @@ scene.mirror$object.num <- c (1, -1, 0) [as.numeric (scene.mirror$object)]
 scene.mirror$table.side.num <- c (-1, 1) [as.numeric (scene.mirror$table.side)]
 
 ### **** Effect of object CG height and secene side
+
+### ***** Extract the data
 scene.mirror.obj <- subset (scene.mirror, stimulus == "object")
 
+### ***** Plot the results
 pdf (file = "scene-mirror-object.pdf")
 par (mar = c (4, 5, 0.5, 0))
 for (i in c (1, 2)) {
