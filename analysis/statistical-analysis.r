@@ -202,7 +202,7 @@ axis (1, at = c (2, 5), tick = FALSE,
       labels = c ("scene on the left", "scene on the right"))
 legend ("topright", inset = 0.05, pch = 22, pt.cex = 2, pt.bg = obj.col,
         legend = c ("low object", "mid object", "high object"))
-dev.off ()
+dummy <- dev.off ()
 
 ### ***** Fit the model
 fm <- lmer (threshold ~ object.num * table.side.num
