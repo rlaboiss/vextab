@@ -174,8 +174,9 @@ show (ranef (fm))
 scene.mirror <- subset (obj.stab.psycho, experiment == "scene-mirror")
 scene.mirror$subject <- factor (as.character (scene.mirror$subject))
 
-### **** Transform the discrete factor object into numeric
+### **** Transform the discrete factors object and table.side into numeric
 scene.mirror$object.num <- c (1, -1, 0) [as.numeric (scene.mirror$object)]
+scene.mirror$table.side.num <- c (-1, 1) [as.numeric (scene.mirror$table.side)]
 
 ### **** Effect of object CG height and secene side
 scene.mirror.obj <- subset (scene.mirror, stimulus == "object")
@@ -197,7 +198,9 @@ legend ("topright", inset = 0.05, pch = 22, pt.cex = 2, pt.bg = obj.col,
         legend = c ("low object", "mid object", "high object"))
 dev.off ()
 
-fm <- lmer (threshold ~ object.num * table.side + (1 | subject),
+### ***** Fit the model
+fm <- lmer (threshold ~ object.num * table.side.num
+                        + (table.side.num | subject),
             scene.mirror.obj)
 show (anova (fm))
 show (fixef (fm))
@@ -225,7 +228,7 @@ legend ("topleft", inset = 0.05, pch = 22, pt.cex = 2, pt.bg = side.col,
         legend = c ("table to the left", "table to the right"))
 dummy <- dev.off ()
 
-fm <- lmer (threshold ~ table.side * background + (1 | subject),
+fm <- lmer (threshold ~ table.side.num * background + (1 | subject),
             scene.mirror.hor)
 show (anova (fm))
 show (fixef (fm))
