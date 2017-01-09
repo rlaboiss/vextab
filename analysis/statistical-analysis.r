@@ -212,6 +212,31 @@ show (anova (fm))
 show (fixef (fm))
 show (ranef (fm))
 
+### ***** Plot the BLUP
+re <- ranef (fm)$subject
+n <- nrow (re)
+fe <- fixef (fm)
+
+library (shape)
+pdf ("mirror-scene-blup.pdf")
+par (c (5, 5, 0.1, 0.1))
+x <- re [,1] + fe [1]
+y <- re [,2]  + fe [3]
+plot (x, y, pch = 19, cex = 1.5, las = 1,  xlim = c (15, 40),
+      ylim = c (-9, max (y)), bty = "n", ylab = "vection effect (degrees/side)",
+      xlab = "angle threshold (degrees)")
+Arrows (fe [1] + 1, -9, fe [1] + 3, -9)
+text (fe [1] + 4, -9, adj = c (0, 0.5), labels = "optimist", cex = 1.2)
+Arrows (fe [1] - 1, -9, fe [1] - 3, -9)
+text (fe [1] - 4, -9, adj = c (1, 0.5), labels = "pessimist", cex = 1.2)
+Arrows (22, fe [3] + 0.5, 22, fe [3] + 1.5)
+text (22, fe [3] + 2, adj = c (0.5, 0), labels = "geometrist", cex = 1.2)
+Arrows (22, fe [3] - 0.5, 22, fe [3] - 1.5)
+text (22, fe [3] - 2, adj = c (0.5, 1), labels = "gravitist", cex = 1.2)
+abline (h = fe [3], col = "#ff000080", lwd = 2)
+abline (v = fe [1], col = "#ff000080", lwd = 2)
+dummy <- dev.off ()
+
 ### **** Effect of background on horizontal detection
 scene.mirror.hor <- subset (scene.mirror, stimulus == "horizontal")
 idx <- which (scene.mirror.hor$table.side == "right")
