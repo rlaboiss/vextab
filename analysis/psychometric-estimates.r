@@ -74,6 +74,11 @@ for (i in seq (1, nb.cond)) {
     if (all (is.na (df$response)))
         next
 
+    ## *** Progress meter
+    cat (sprintf ("\r%5d/%d: %s, %12s, %6s, %10s, %7s, %4s",
+                  i, nb.cond, sb, ex, bg, st, co, ot))
+    flush (stdout ())
+
     ## *** Compute parameters and store them
     ps <- get.psycho (df)
     threshold [i] <- ps [1]
@@ -83,10 +88,6 @@ for (i in seq (1, nb.cond)) {
     slope.ci.inf [i] <- ps [5]
     slope.ci.sup [i] <- ps [6]
 
-    ## *** Progress meter
-    cat (sprintf ("\r%5d/%d: %s, %12s, %6s, %10s, %7s, %4s",
-                  i, nb.cond, sb, ex, bg, st, co, ot))
-    flush (stdout ())
 }
 
 ### ** Clean the progress meter
