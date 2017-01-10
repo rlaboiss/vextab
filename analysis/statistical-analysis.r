@@ -179,7 +179,7 @@ scene.mirror$subject <- factor (as.character (scene.mirror$subject))
 
 ### **** Transform the discrete factors object and table.side into numeric
 scene.mirror$object.num <- c (1, -1, 0) [as.numeric (scene.mirror$object)]
-scene.mirror$table.side.num <- c (-1, 1) [as.numeric (scene.mirror$table.side)]
+scene.mirror$table.side.num <- c (1, -1) [as.numeric (scene.mirror$table.side)]
 
 ### **** Effect of object CG height and secene side
 
@@ -222,17 +222,17 @@ pdf ("mirror-scene-blup.pdf")
 par (c (5, 5, 0.1, 0.1))
 x <- re [,1] + fe [1]
 y <- re [,2]  + fe [3]
-plot (x, y, pch = 19, cex = 1.5, las = 1,  xlim = c (15, 40),
-      ylim = c (-9, max (y)), bty = "n", ylab = "vection effect (degrees/side)",
+plot (x, y, pch = 19, cex = 1.5, las = 1,  xlim = c (15, 40), col = "#00000080",
+      ylim = c (min (y), 9), bty = "n", ylab = "table side effect (degrees/side)",
       xlab = "angle threshold (degrees)")
-Arrows (fe [1] + 1, -9, fe [1] + 3, -9)
-text (fe [1] + 4, -9, adj = c (0, 0.5), labels = "optimist", cex = 1.2)
-Arrows (fe [1] - 1, -9, fe [1] - 3, -9)
-text (fe [1] - 4, -9, adj = c (1, 0.5), labels = "pessimist", cex = 1.2)
-Arrows (22, fe [3] + 0.5, 22, fe [3] + 1.5)
-text (22, fe [3] + 2, adj = c (0.5, 0), labels = "geometrist", cex = 1.2)
+Arrows (fe [1] + 1, 9, fe [1] + 3, 9)
+text (fe [1] + 4, 9, adj = c (0, 0.5), labels = "risky", cex = 1.2)
+Arrows (fe [1] - 1, 9, fe [1] - 3, 9)
+text (fe [1] - 4, 9, adj = c (1, 0.5), labels = "cautious", cex = 1.2)
 Arrows (22, fe [3] - 0.5, 22, fe [3] - 1.5)
-text (22, fe [3] - 2, adj = c (0.5, 1), labels = "gravitist", cex = 1.2)
+text (22, fe [3] - 2, adj = c (0.5, 1), labels = "geometrist", cex = 1.2)
+Arrows (22, fe [3] + 0.5, 22, fe [3] + 1.5)
+text (22, fe [3] + 2, adj = c (0.5, 0), labels = "gravitist", cex = 1.2)
 abline (h = fe [3], col = "#ff000080", lwd = 2)
 abline (v = fe [1], col = "#ff000080", lwd = 2)
 dummy <- dev.off ()
