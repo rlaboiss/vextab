@@ -20,24 +20,28 @@ obj.stab.psycho <- aggregate (response ~ subject + experiment + background
 
 ### * Psychometric parameter estimation
 
-### ** Load the needed library (for the bootstrap function)
-library (car)
+### ** Load the needed library
+### *** For the glmrob function
+library (robustbase)
+### *** For the HPDinterval function
+library (coda)
+### *** For the mvrnorm function
+library (MASS)
 
 ### ** Function for extracting the parameters and the associated CI
 get.psycho <- function (df) {
     ## *** Fit the model
-    fm <- glm (response.n ~ angle, family = binomial, data = df)
+    fm <- glmrob (response.n ~ angle, family = binomial, data = df)
     ## *** Get the coeeficientes
     cf <- coefficients (fm)
-    ## *** Do the bootstrap on the slope + threshold (NOT on glm coeffs)
-    bs <- Boot (fm, function (m) {
-        cf <- coef (m)
-        c (-cf [1] / cf [2], cf [2])
-    })
-    ## *** Get confidence intervals
-    ci <- confint (bs)
-    ## *** Returning vector with results
-    c ( - cf [1] / cf [2], ci [1, ], cf [2], ci [2, ])
+    ## *** Profile the fitted coefficients
+    cv <- summary (fm)$cov.scaled
+    x <- mvrnorm (10000, mu = cf, Sigma = cv)
+    ## *** Return coefficients and HDI
+    c ( -cf [1] / cf [2],
+       as.vector (HPDinterval (as.mcmc (-x [, 1] / x [, 2]), prob = 0.95)),
+       cf [2],
+       as.vector (HPDinterval (as.mcmc (x [, 2]), prob = 0.95)))
 }
 
 ### * Collect the data
