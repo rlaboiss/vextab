@@ -50,6 +50,8 @@ get.psycho <- function (df) {
 threshold <- threshold.ci.inf <- threshold.ci.sup <-
      slope <- slope.ci.inf <- slope.ci.sup <- rep (NA, nrow (obj.stab.psycho))
 
+options (warn = 1)
+
 ### ** Store values for each condition
 nb.cond <- nrow (obj.stab.psycho)
 for (i in seq (1, nb.cond)) {
