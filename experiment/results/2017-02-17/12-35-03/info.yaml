@@ -3,5 +3,5 @@ subject: 73
 background: vection
 stimulus: object
 object-side: left
-table-side: left
+table-side: none
 chair: upright

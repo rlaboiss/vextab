@@ -3,5 +3,5 @@ subject: 84
 background: static
 stimulus: object
 object-side: left
-table-side: left
+table-side: none
 chair: upright
