@@ -130,6 +130,27 @@ for (i in seq (1, 4)) {
 
 }
 
+### **** Plot random effects for horizontality vs. object stability models
+
+pdf (file = "room-126-ranef-cor.pdf")
+par (mar = c (4, 5, 0.5, 0))
+plot (fe.bg.hor [2] + re.bg.hor$subject [, 1],
+      fe.bg.obj [2] + re.bg.obj$subject [, 1],
+      pch = 19, bty = "n", las = 1, xlim = c (0,7),
+      xlab = expression (paste (Delta, "SVV (degrees)")),
+      ylab = expression (paste (Delta, "CA (degrees)")))
+dummy <- dev.off ()
+
+pdf (file = "room-126-ranef-cor-diag.pdf")
+par (mar = c (4, 5, 0.5, 0))
+plot (fe.bg.hor [2] + re.bg.hor$subject [, 1],
+      fe.bg.obj [2] + re.bg.obj$subject [, 1],
+      pch = 19, bty = "n", las = 1, xlim = c (0,7),
+      xlab = expression (paste (Delta, "SVV (degrees)")),
+      ylab = expression (paste (Delta, "CA (degrees)")))
+abline (0, 1, lty = 2, col = "gray", lwd = 2)
+dummy <- dev.off ()
+
 ### *** New screen
 
 ### **** Select the data
