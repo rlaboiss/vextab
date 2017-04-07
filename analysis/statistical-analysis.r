@@ -347,3 +347,52 @@ show (fm)
 fm <- t.test (threshold ~ background, paired = TRUE,
               data = subset (flip.table.hor, table.side == "right"))
 show (fm)
+
+### *** No table
+
+### **** Select the data
+no.table <- subset (obj.stab.psycho, experiment == "no-table")
+no.table$subject <- factor (as.character (no.table$subject))
+no.table$object.num <- c (1, -1, 0) [as.numeric (no.table$object)]
+
+### **** Effect of object and background and object GC height on object stability
+no.table.obj <- subset (no.table, stimulus == "object")
+
+pdf (file = "no-table-object.pdf")
+par (mar = c (4, 5, 0.5, 0))
+for (i in c (1, 2)) {
+    boxplot (threshold ~ object.num * background * table.side, no.table.obj,
+             frame = FALSE, las = 1, xlab = "", ylab = boxplot.ylab,
+             xaxt = "n", pars = boxplot.pars,
+             col = rep (obj.col, 2), add = (i == 2))
+    if (i == 1)
+        polygon (c (3.5, 6.5, 6.5, 3.5), c (0, 0, 100, 100),
+                 col = "#eeeeee", border = NA)
+}
+axis (1, at = c (2, 5), tick = FALSE,
+      labels = c ("static background", "rotating background"))
+legend ("topright", inset = 0.05, pch = 22, pt.cex = 2, pt.bg = obj.col,
+        legend = c ("low object", "mid object", "high object"))
+dummy <- dev.off ()
+
+fm <- lmer (threshold ~ background * object.num * table.side + (1 | subject),
+            no.table.obj)
+show (anova (fm))
+show (fixef (fm))
+show (ranef (fm))
+
+fe <- fixef (fm)
+
+pdf (file = "no-table-object.pdf", width = 4, height = 5)
+par (mar = c (4, 5, 0.5, 0))
+plot (c (1, 1, 2, 2),
+      c (fe[1], fe [1] + fe [2], fe [1] + fe [4],
+         fe [1] + fe [2] + fe [4] + fe [6]),
+      pch = 19, col = rep (c ("blue", "red"), 2), bty = "n",
+      xlim = c (0.7, 2.3), cex = 1.3,
+      las = 1, xaxt = "n", xlab = "", ylab = "critical angle (degrees)")
+lines (c (1, 2), c (fe[1], fe [1] + fe [4]), col = "blue")
+lines (c (1, 2), c (fe [1] + fe [2], fe [1] + fe [2] + fe [4] + fe [6]), col = "red")
+axis (1, at = c (1, 2), labels = c ("table", "no table"))
+legend ("right", col = c ("red", "blue"), legend = c ("rotating", "static"), pch = 19)
+dummy <- dev.off ()
