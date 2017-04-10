@@ -222,7 +222,7 @@ legend ("bottomleft", inset = 0.02, pch = obj.pch, pt.cex = 0.75 * obj.cex,
         legend = c ("low GC", "mid GC", "high GC"))
 par (xpd = NA)
 text (-0.2, y.max, adj = c (0, 0), labels = "A", cex = 2)
-dev.off ()
+dummy <- dev.off ()
 
 ### ***** Panel B
 pred <- predict (fm.r126.bg.hor,
@@ -245,7 +245,7 @@ for (i in seq (1, 2))
 points (c (2, 5), pred, pch = 21, cex = 1.8, bg = "white")
 par (xpd = NA)
 text (-0.2, y.max + 0.8, adj = c (0, -0.2), labels = "B", cex = 2)
-dev.off ()
+dummy <- dev.off ()
 
 ### ***** Panel C
 pred <- predict (fm.r126.chair.obj,
@@ -270,7 +270,7 @@ for (i in seq (1, 9))
     lines (rep (i, 2), pred [i] + se [i] * c(-1, 1), lwd = 3)
 par (xpd = NA)
 text (-0.2, y.max, adj = c (0, -0.2), labels = "C", cex = 2)
-dev.off ()
+dummy <- dev.off ()
 
 ### ***** Panel D
 pred <- predict (fm.r126.chair.hor,
@@ -293,7 +293,7 @@ for (i in seq (1, 3))
 points (c (2, 5, 8), pred, pch = 21, cex = 1.8, bg = "white")
 par (xpd = NA)
 text (-0.2, y.max + 0.8, adj = c (0, -0.2), labels = "D", cex = 2)
-dev.off ()
+dummy <- dev.off ()
 
 ### ***** Compose Figure
 system (paste ("pdfjam Fig-2-A.pdf Fig-2-C.pdf Fig-2-B.pdf Fig-2-D.pdf",
@@ -317,7 +317,7 @@ abline (0, 1, col = "gray", lwd = 2)
 points (delta.hor$threshold, delta.ca$threshold, pch = 19)
 points (mean (delta.hor$threshold), mean (delta.ca$threshold), pch = 18,
         col = "#ff000080", cex = 3)
-dev.off ()
+dummy <- dev.off ()
 
 
 ### *** Scene mirror
