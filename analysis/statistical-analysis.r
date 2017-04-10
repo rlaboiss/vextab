@@ -189,6 +189,137 @@ show (anova (fm))
 show (fixef (fm))
 show (ranef (fm))
 
+### **** Results Exp. 1 (Fig. 2)
+
+### ***** Points shapes & sizes + labels
+obj.pch <- c (18, 16, 15) # diamond, circle, square
+obj.cex <- c (2.5, 2, 2) # diamond, circle, square
+chair.lab <- c ("left tilt", "upright", "right tilt")
+bg.lab <- c ("static background", "rotating background")
+
+### ***** Panel A
+pred <- predict (fm.r126.bg.obj,
+                 expand.grid (object.num  = c (-1, 0, 1),
+                              background = c ("static", "vection")),
+                 re.form = NA)
+se <- aggregate (residuals ~ object.num * background,
+                 df.r126.bg.obj,
+                 function (x) sd (x) / sqrt (length (x)))$residuals
+y.min <- 27.5
+y.max <- 37
+pdf (file = "Fig-2-A.pdf", width = 5, height = 5)
+par (mar = c (2, 4, 1, 0))
+plot (0, 0, xlim = c (0.5, 6.5), bty = "n", xaxt = "n", las = 1,
+      ylim = c (y.min, y.max),
+      xlab = "", ylab = "critical angle (degrees)", type = "n")
+axis (1, at = c (2, 5), tick = FALSE, labels = bg.lab)
+polygon (c (3.5, 6.5, 6.5, 3.5), c (-50, -50, 38, 38), col = "#eeeeee",
+         border = NA)
+points (pred, pch = obj.pch, cex = obj.cex)
+for (i in seq (1, 6))
+    lines (rep (i, 2), pred [i] + se [i] * c(-1, 1), lwd = 3)
+legend ("bottomleft", inset = 0.02, pch = obj.pch, pt.cex = 0.75 * obj.cex,
+        legend = c ("low GC", "mid GC", "high GC"))
+par (xpd = NA)
+text (-0.2, y.max, adj = c (0, 0), labels = "A", cex = 2)
+dev.off ()
+
+### ***** Panel B
+pred <- predict (fm.r126.bg.hor,
+                 expand.grid (background = c ("static", "vection")),
+                 re.form = NA)
+se <- aggregate (residuals ~ background, df.r126.bg.hor,
+                 function (x) sd (x) / sqrt (length (x)))$residuals
+y.min <- -4
+y.max <- 7
+pdf (file = "Fig-2-B.pdf", width = 5, height = 4)
+par (mar = c (4.5, 4, 2.0, 0))
+plot (0, 0, xlim = c (0.5, 6.5), bty = "n", xaxt = "n", las = 1,
+      ylim = c (y.min, y.max), xlab = "",
+      ylab = "subjective visual horizontal (degrees)", type = "n")
+axis (1, at = c (2, 5), tick = FALSE, labels = bg.lab)
+polygon (c (3.5, 6.5, 6.5, 3.5), c (-50, -50, 38, 38), col = "#eeeeee",
+         border = NA)
+for (i in seq (1, 2))
+    lines (rep ((i - 1) * 3 + 2, 2), pred [i] + se [i] * c(-1, 1), lwd = 3)
+points (c (2, 5), pred, pch = 21, cex = 1.8, bg = "white")
+par (xpd = NA)
+text (-0.2, y.max + 0.8, adj = c (0, -0.2), labels = "B", cex = 2)
+dev.off ()
+
+### ***** Panel C
+pred <- predict (fm.r126.chair.obj,
+                 expand.grid (object.num  = c (-1, 0, 1),
+                              chair.num = c (-1, 0, 1)),
+                 re.form = NA)
+se <- aggregate (residuals ~ object.num * chair.num,
+                 df.r126.chair.obj,
+                 function (x) sd (x) / sqrt (length (x)))$residuals
+pdf (file = "Fig-2-C.pdf", width = 5, height = 5)
+par (mar = c (2, 4, 1, 0))
+y.min <- 27.5
+y.max <- 37
+plot (0, 0, xlim = c (0.5, 9.5), bty = "n", xaxt = "n", las = 1, type = "n",
+      ylim = c (y.min, y.max), xlab = "", ylab = "critical angle (degrees)")
+axis (1, at = c (2, 5, 8), tick = FALSE,
+      labels = c ("left tilt", "upright", "right tilt"))
+polygon (c (3.5, 6.5, 6.5, 3.5), c (-50, -50, 38, 38), col = "#eeeeee",
+         border = NA)
+points (pred, pch = obj.pch, cex = obj.cex)
+for (i in seq (1, 9))
+    lines (rep (i, 2), pred [i] + se [i] * c(-1, 1), lwd = 3)
+par (xpd = NA)
+text (-0.2, y.max, adj = c (0, -0.2), labels = "C", cex = 2)
+dev.off ()
+
+### ***** Panel D
+pred <- predict (fm.r126.chair.hor,
+                 expand.grid (chair.num = c (-1, 0, 1)),
+                 re.form = NA)
+se <- aggregate (residuals ~ chair.num, df.r126.chair.hor,
+                 function (x) sd (x) / sqrt (length (x)))$residuals
+y.min <- -4
+y.max <- 7
+pdf (file = "Fig-2-D.pdf", width = 5, height = 4)
+par (mar = c (4.5, 5, 2.0, 0))
+plot (0, 0, xlim = c (0.5, 9.5), bty = "n", xaxt = "n", las = 1,
+      ylim = c (y.min, y.max),
+      xlab = "", ylab = "subjective visual horizontal (degrees)", type = "n")
+axis (1, at = c (2, 5, 8), tick = FALSE, labels = chair.lab)
+polygon (c (3.5, 6.5, 6.5, 3.5), c (-50, -50, 38, 38), col = "#eeeeee",
+         border = NA)
+for (i in seq (1, 3))
+    lines (rep ((i - 1) * 3 + 2, 2), pred [i] + se [i] * c(-1, 1), lwd = 3)
+points (c (2, 5, 8), pred, pch = 21, cex = 1.8, bg = "white")
+par (xpd = NA)
+text (-0.2, y.max + 0.8, adj = c (0, -0.2), labels = "D", cex = 2)
+dev.off ()
+
+### ***** Compose Figure
+system (paste ("pdfjam Fig-2-A.pdf Fig-2-C.pdf Fig-2-B.pdf Fig-2-D.pdf",
+               "--no-landscape --frame true --nup 2x2 --frame false",
+               "--outfile tmp.pdf"))
+system ("pdfcrop --margins 10 tmp.pdf Fig-2.pdf")
+
+### **** Correlation figure (Fig. 3)
+df.hor <- subset(room.126, stimulus == "horizontal" & chair == "upright")
+delta.hor <- aggregate (threshold ~ subject, df.hor, diff)
+df.ca <- subset(room.126, stimulus == "object" & chair == "upright")
+delta.ca <- aggregate (threshold ~ subject,
+                       aggregate (threshold ~ subject * background, df.ca, mean),
+                       diff)
+pdf (file = "Fig-3.pdf", width = 5, height = 5)
+par (mar = c (5, 4, 0, 0))
+plot (delta.hor$threshold, delta.ca$threshold, bty = "n", las = 1, pch = 19,
+      xlab = expression (paste (Delta, "SVH (degrees)")),
+      ylab = expression (paste (Delta, "CA (degrees)")), type = "n")
+abline (0, 1, col = "gray", lwd = 2)
+points (delta.hor$threshold, delta.ca$threshold, pch = 19)
+points (mean (delta.hor$threshold), mean (delta.ca$threshold), pch = 18,
+        col = "#ff000080", cex = 3)
+dev.off ()
+
+
 ### *** Scene mirror
 
 ### **** Select the data
