@@ -8,6 +8,11 @@ library (lmerTest)
 ### ** Load the results
 obj.stab.psycho <- read.csv ("obj-stab-psycho.csv")
 
+### ** Transform the discrete factors chair and object into numeric
+obj.stab.psycho$object.num <- c (1, -1, 0) [as.numeric(obj.stab.psycho$object)]
+obj.stab.psycho$chair.num <- c (-1, 1, 0) [as.numeric (obj.stab.psycho$chair)]
+obj.stab.psycho$table.side.num <- c (-1, 0, 1) [as.numeric (obj.stab.psycho$table.side)]
+
 ### ** Boxplot parameters
 obj.col <- c ("pink", "cyan", "wheat")
 exp.col <- c ("aquamarine", "coral")
@@ -20,13 +25,7 @@ boxplot.ylab <- "threshold angle (degrees)"
 ### *** Room 126
 
 ### **** Select the data
-### Subject S066 only participated to the wide × computer screen experiment
-room.126 <- subset (obj.stab.psycho, experiment == "room-126"
-                                     & subject != "S066")
-
-### **** Transform the discrete factors chair and object into numeric
-room.126$chair.num <- c (-1, 1, 0) [as.numeric (room.126$chair)]
-room.126$object.num <- c (1, -1, 0) [as.numeric(room.126$object)]
+room.126 <- subset (obj.stab.psycho, experiment == "room-126")
 
 ### **** Drop subject S066 (it's Corinne Cian!))
 room.126 <- subset (room.126, subject != "S066")
@@ -326,16 +325,12 @@ dummy <- dev.off ()
 scene.mirror <- subset (obj.stab.psycho, experiment == "scene-mirror")
 scene.mirror$subject <- factor (as.character (scene.mirror$subject))
 
-### **** Transform the discrete factors object and table.side into numeric
-scene.mirror$object.num <- c (1, -1, 0) [as.numeric (scene.mirror$object)]
-scene.mirror$table.side.num <- c (1, 0, -1) [as.numeric (scene.mirror$table.side)]
-
 ### **** Effect of object CG height and secene side
 
 ### ***** Extract the data
 scene.mirror.obj <- subset (scene.mirror, stimulus == "object")
 
-### ***** Plot the results
+### ***** Plot the raw results
 pdf (file = "scene-mirror-object.pdf")
 par (mar = c (4, 5, 0.5, 0))
 for (i in c (1, 2)) {
@@ -502,11 +497,6 @@ show (fm)
 
 ### **** Select the data
 no.table <- subset (obj.stab.psycho, experiment == "no-table")
-no.table$subject <- factor (as.character (no.table$subject))
-no.table$object.num <- c (1, -1, 0) [as.numeric (no.table$object)]
-
-### **** Effect of object and background and object GC height on object stability
-no.table.obj <- subset (no.table, stimulus == "object")
 
 pdf (file = "no-table-object.pdf")
 par (mar = c (4, 5, 0.5, 0))
