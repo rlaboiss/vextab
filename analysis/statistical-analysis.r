@@ -328,7 +328,7 @@ scene.mirror$subject <- factor (as.character (scene.mirror$subject))
 
 ### **** Transform the discrete factors object and table.side into numeric
 scene.mirror$object.num <- c (1, -1, 0) [as.numeric (scene.mirror$object)]
-scene.mirror$table.side.num <- c (1, -1) [as.numeric (scene.mirror$table.side)]
+scene.mirror$table.side.num <- c (1, 0, -1) [as.numeric (scene.mirror$table.side)]
 
 ### **** Effect of object CG height and secene side
 
