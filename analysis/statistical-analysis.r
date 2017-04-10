@@ -498,6 +498,7 @@ show (fm)
 ### **** Select the data
 no.table <- subset (obj.stab.psycho, experiment == "no-table")
 
+### **** Plot the raw results
 pdf (file = "no-table-object.pdf")
 par (mar = c (4, 5, 0.5, 0))
 for (i in c (1, 2)) {
