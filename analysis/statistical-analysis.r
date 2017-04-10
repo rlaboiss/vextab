@@ -5,7 +5,7 @@
 library (lme4)
 library (lmerTest)
 
-### ** Load the resutls
+### ** Load the results
 obj.stab.psycho <- read.csv ("obj-stab-psycho.csv")
 
 ### ** Boxplot parameters
