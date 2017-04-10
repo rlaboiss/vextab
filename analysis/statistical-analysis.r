@@ -20,7 +20,9 @@ boxplot.ylab <- "threshold angle (degrees)"
 ### *** Room 126
 
 ### **** Select the data
-room.126 <- subset (obj.stab.psycho, experiment == "room-126")
+### Subject S066 only participated to the wide × computer screen experiment
+room.126 <- subset (obj.stab.psycho, experiment == "room-126"
+                                     & subject != "S066")
 
 ### **** Transform the discrete factors chair and object into numeric
 room.126$chair.num <- c (-1, 1, 0) [as.numeric (room.126$chair)]
