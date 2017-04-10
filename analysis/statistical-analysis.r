@@ -361,6 +361,15 @@ show (anova (fm))
 show (fixef (fm))
 show (ranef (fm))
 
+fm.no.Intercept <- lmer (threshold ~ object.num * table.side.num
+                                     + (0 + table.side.num | subject),
+                         scene.mirror.obj)
+fm.no.table.side.num <- lmer (threshold ~ object.num * table.side.num
+                                          + (1 | subject),
+                              scene.mirror.obj)
+show (anova (fm.no.Intercept, fm))
+show (anova (fm.no.table.side.num, fm))
+
 ### ***** Plot the BLUP
 re <- ranef (fm)$subject
 n <- nrow (re)
