@@ -151,6 +151,36 @@ plot (fe.r126.bg.hor [2] + re.r126.bg.hor$subject [, 1],
 abline (0, 1, lty = 2, col = "gray", lwd = 2)
 dummy <- dev.off ()
 
+### **** Select representative subjects
+
+### ***** Object stability experiment
+
+### Get the data frame for the room-126 (background/object) experiment
+### in condition "static"
+df <- subset (df.r126.bg.obj, background == "static")
+### Compute the differences in threshold high-mid and mid-low
+ag <- aggregate (threshold ~ subject, df,
+                 function (x) c(x[2] - x[3], x [3] - x [1]))
+diff.t <- ag$threshold
+### Get the size of the effect
+diff.ca <- -fixef (fm.r126.bg.obj) [3]
+### Find the subject
+idx <- which.min ((diff.t [, 1] - diff.ca) ^ 2 + (diff.t [, 2] - diff.ca) ^ 2)
+cat (sprintf ("Representative subject is %s\n", ag$subject [idx]))
+
+### ***** Horizontality experiment
+
+### Get the data frame for the room-126 (background/horizontal) experiment
+### in condition "vection"
+df <- subset (df.r126.bg.hor, background == "vection")
+### Get the indivual thresholds
+thres <- df$threshold
+### Get the size of the effect
+fe <- fixef (fm.r126.bg.hor) [2]
+### Find the subject
+idx <- which.min ((thres - fe) ^ 2)
+cat (sprintf ("Representative subject is %s\n", df$subject [idx]))
+
 ### *** New screen
 
 ### **** Select the data
