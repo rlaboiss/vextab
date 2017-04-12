@@ -550,3 +550,31 @@ axis (1, at = c (1, 2), labels = c ("table", "no table"))
 legend ("right", col = c ("red", "blue"), legend = c ("rotating", "static"),
         pch = 19)
 dummy <- dev.off ()
+
+### ***** Plot the results
+pred <- predict (fm, expand.grid (object.num = c (-1, 0, 1),
+                                  background = c ("static", "vection"),
+                                  table.side = c ("left", "none")),
+                 re.form = NA)
+no.table$residuals <- residuals (fm)
+se <- aggregate (residuals ~ object.num * table.side * background,
+                 no.table, function (x) sd (x) / sqrt (length (x)))$residuals
+y.min <- min (pred - se)
+y.max <- max (pred + se)
+pdf (file = "Fig-6.pdf", width = 7, height = 5)
+par (mar = c (4.5, 5, 4.5, 0), xpd = FALSE)
+plot (0, 0, type = "n", xlim = c (0.5, 12.5), bty = "n", xaxt = "n", las = 1,
+      ylim = c (y.min, y.max), xlab = "", ylab = "critical angle (degrees)")
+axis (1, at = c (3.5, 9.5), labels = c ("with table", "without table"), line = 1)
+for (i in c (1, 2)) {
+    polygon (6 * (i - 1) + c (3.5, 6.5, 6.5, 3.5),
+             c (0, 0, 100, 100), col = "#eeeeee", border = NA)
+    axis (3, at = 6 * (i - 1) + c (2, 5), line = 1,
+          labels = c ("static", "rotating"))
+}
+for (i in seq (1, 12))
+    lines (rep (i, 2), pred [i] + se [i] * c(-1, 1), lwd = 3)
+points (pred, pch = obj.pch, cex = obj.cex)
+legend ("topleft", inset = 0.05, pch = obj.pch, pt.cex = 0.75 * obj.cex,
+        legend = c ("low GC", "mid GC", "high GC"))
+dummy <- dev.off ()
