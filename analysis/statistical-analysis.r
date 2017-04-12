@@ -395,37 +395,19 @@ re <- ranef (fm)$subject
 n <- nrow (re)
 fe <- fixef (fm)
 
-library (shape)
-
-par (c (5, 5, 0.1, 0.1))
+pdf (file = "Fig-5-B.pdf", width = 5, height = 5)
+par (mar = c (5, 5.5, 2, 0.1))
 x <- re [,1] + fe [1]
-y <- re [,2]  + fe [3]
+y <- -2 * (re [,2]  + fe [3])
+y.min <- min (y)
+y.max <- 18
 plot (x, y, pch = 19, cex = 1.5, las = 1,  xlim = c (15, 40), col = "#00000080",
-      ylim = c (min (y), 9), bty = "n", ylab = "table side effect (degrees/side)",
-      xlab = "angle threshold (degrees)")
-dev.copy2pdf (file = "mirror-scene-blup.pdf")
-abline (h = fe [3], col = "#ff000080", lwd = 2)
-abline (v = fe [1], col = "#ff000080", lwd = 2)
-dev.copy2pdf (file = "mirror-scene-blup-lines.pdf")
-Arrows (fe [1] + 1, 9, fe [1] + 3, 9)
-text (fe [1] + 4, 9, adj = c (0, 0.5), labels = "risky", cex = 1.2)
-Arrows (fe [1] - 1, 9, fe [1] - 3, 9)
-text (fe [1] - 4, 9, adj = c (1, 0.5), labels = "cautious", cex = 1.2)
-Arrows (22, fe [3] - 0.5, 22, fe [3] - 1.5)
-text (22, fe [3] - 2, adj = c (0.5, 1), labels = "geometrist", cex = 1.2)
-Arrows (22, fe [3] + 0.5, 22, fe [3] + 1.5)
-text (22, fe [3] + 2, adj = c (0.5, 0), labels = "gravitist", cex = 1.2)
-dev.copy2pdf (file = "mirror-scene-blup-types.pdf")
-
-cohort.info <- read.csv ("cohort-info.csv")
-rn <- row.names (re)
-cols <- list (M = "blue", F = "red")
-for (i in seq (1, length (rn))) {
-    gender <- as.character (subset (cohort.info, subject == rn [i])$gender)
-    points (x [i], y [i], cex = 2.5,
-            col = cols [[gender]])
-}
-
+      bty = "n", xlab = "mean critical angle (degrees)",
+      ylab = "left/right side effect (degrees)")
+abline (h = -2 * fe [3], col = "#00000080", lwd = 2, lty = "21")
+abline (v = fe [1], col = "#00000080", lwd = 2, lty = "21")
+par (xpd = NA)
+text (14, 16.5, adj = c (1, 0), labels = "B", cex = 2)
 dummy <- dev.off ()
 
 ### **** Effect of background on horizontal detection
