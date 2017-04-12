@@ -365,6 +365,31 @@ fm.no.table.side.num <- lmer (threshold ~ object.num * table.side.num
 show (anova (fm.no.Intercept, fm))
 show (anova (fm.no.table.side.num, fm))
 
+### ***** Plot the results
+pred <- predict (fm, expand.grid (object.num = c (-1, 0, 1),
+                                  table.side.num = c (-1, 1)),
+                 re.form = NA)
+scene.mirror.obj$residuals <- residuals (fm)
+se <- aggregate (residuals ~ object.num * table.side.num, scene.mirror.obj,
+                 function (x) sd (x) / sqrt (length (x)))$residuals
+y.min <- min (pred - se)
+y.max <- max (pred + se)
+pdf (file = "Fig-5-A.pdf", width = 5, height = 5)
+par (mar = c (4.5, 5, 2.0, 0))
+plot (0, 0, type = "n", xlim = c (0.5, 6.5), bty = "n", xaxt = "n", las = 1,
+      ylim = c (y.min, y.max), xlab = "", ylab = "critical angle (degrees)")
+axis (1, at = c (2, 5), tick = FALSE, labels = scene.lab)
+polygon (c (3.5, 6.5, 6.5, 3.5), c (-50, -50, 38, 38), col = "#eeeeee",
+         border = NA)
+for (i in seq (1, 6))
+    lines (rep (i, 2), pred [i] + se [i] * c(-1, 1), lwd = 3)
+points (pred, pch = obj.pch, cex = obj.cex)
+legend ("bottomleft", inset = 0.05, pch = obj.pch, pt.cex = 0.75 * obj.cex,
+        legend = c ("low GC", "mid GC", "high GC"))
+par (xpd = NA)
+text (-0.2, y.max + 0.8, adj = c (0, -0.2), labels = "A", cex = 2)
+dummy <- dev.off ()
+
 ### ***** Plot the BLUP
 re <- ranef (fm)$subject
 n <- nrow (re)
