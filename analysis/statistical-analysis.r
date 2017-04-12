@@ -544,7 +544,9 @@ plot (c (1, 1, 2, 2),
       xlim = c (0.7, 2.3), cex = 1.3,
       las = 1, xaxt = "n", xlab = "", ylab = "critical angle (degrees)")
 lines (c (1, 2), c (fe[1], fe [1] + fe [4]), col = "blue")
-lines (c (1, 2), c (fe [1] + fe [2], fe [1] + fe [2] + fe [4] + fe [6]), col = "red")
+lines (c (1, 2), c (fe [1] + fe [2], fe [1] + fe [2] + fe [4] + fe [6]),
+       col = "red")
 axis (1, at = c (1, 2), labels = c ("table", "no table"))
-legend ("right", col = c ("red", "blue"), legend = c ("rotating", "static"), pch = 19)
+legend ("right", col = c ("red", "blue"), legend = c ("rotating", "static"),
+        pch = 19)
 dummy <- dev.off ()
