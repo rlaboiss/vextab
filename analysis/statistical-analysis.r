@@ -87,8 +87,7 @@ for (i in c (1, 2)) {
         polygon (c (3.5, 6.5, 6.5, 3.5), c (0, 0, 100, 100),
                  col = "#eeeeee", border = NA)
 }
-axis (1, at = c (2, 5), tick = FALSE,
-      labels = c ("static background", "rotating background"))
+axis (1, at = c (2, 5), tick = FALSE, labels = bg.lab)
 legend ("topright", inset = 0.05, pch = 22, pt.cex = 2, pt.bg = obj.col,
         legend = c ("low object", "mid object", "high object"))
 dummy <- dev.off ()
@@ -109,8 +108,7 @@ par (mar = c (4, 5, 0.5, 0))
 boxplot (threshold ~ background, df.r126.bg.hor, frame = FALSE,
          las = 1, xlab = "", ylab = boxplot.ylab,
          xaxt = "n", pars = list (boxwex  = 0.2, bty = "n"))
-axis (1, at = c (1, 2), tick = FALSE,
-      labels = c ("static background", "rotating background"))
+axis (1, at = c (1, 2), tick = FALSE, labels = bg.lab)
 dummy <- dev.off ()
 
 ### ***** Efect of inclination in static background on horizontal estimation
@@ -182,8 +180,7 @@ for (i in c (1, 2)) {
         polygon (c (2.5, 4.5, 4.5, 2.5), c (-50, -50, 50, 50),
                  col = "#eeeeee", border = NA)
 }
-axis (1, at = c (1.5, 3.5), tick = FALSE,
-      labels = c ("static background", "rotating background"))
+axis (1, at = c (1.5, 3.5), tick = FALSE, labels = bg.lab)
 legend ("topleft", inset = 0.05, pch = 22, pt.cex = 2, pt.bg = exp.col,
         legend = c ("computer screen", "wall screen"))
 dummy <- dev.off ()
@@ -346,8 +343,7 @@ for (i in c (1, 2)) {
         polygon (c (3.5, 6.5, 6.5, 3.5), c (0, 0, 100, 100),
                  col = "#eeeeee", border = NA)
 }
-axis (1, at = c (2, 5), tick = FALSE,
-      labels = c ("scene on the left", "scene on the right"))
+axis (1, at = c (2, 5), tick = FALSE, labels = scene.lab)
 legend ("topright", inset = 0.05, pch = 22, pt.cex = 2, pt.bg = obj.col,
         legend = c ("low object", "mid object", "high object"))
 dummy <- dev.off ()
@@ -423,10 +419,9 @@ for (i in c (1, 2)) {
         polygon (c (2.5, 4.5, 4.5, 2.5), c (-50, -50, 50, 50),
                  col = "#eeeeee", border = NA)
 }
-axis (1, at = c (1.5, 3.5), tick = FALSE,
-      labels = c ("static background", "rotating background"))
+axis (1, at = c (1.5, 3.5), tick = FALSE, labels = bg.lab)
 legend ("topleft", inset = 0.05, pch = 22, pt.cex = 2, pt.bg = side.col,
-        legend = c ("table to the left", "table to the right"))
+        legend = table.lab)
 dummy <- dev.off ()
 
 fm <- lmer (threshold ~ table.side.num * background + (1 | subject),
@@ -455,8 +450,7 @@ for (i in c (1, 2)) {
         polygon (c (2.5, 4.5, 4.5, 2.5), c (-50, -50, 50, 50),
                  col = "#eeeeee", border = NA)
 }
-axis (1, at = c (1.5, 3.5), tick = FALSE,
-      labels = c ("static background", "rotating background"))
+axis (1, at = c (1.5, 3.5), tick = FALSE, labels = bg.lab)
 legend ("bottomleft", inset = 0.05, pch = 22, pt.cex = 2, pt.bg = side.col,
         legend = c ("table to the left", "table to the right"))
 dummy <- dev.off ()
@@ -486,7 +480,7 @@ for (i in c (1, 2)) {
 axis (1, at = c (1.5, 3.5), tick = FALSE,
       labels = c ("table to the left", "table to the right"))
 legend ("topleft", inset = 0.05, pch = 22, pt.cex = 2, pt.bg = side.col,
-        legend = c ("static background", "rotating background"))
+        legend = bg.lab)
 dummy <- dev.off ()
 
 fm <- t.test (threshold ~ background, paired = TRUE,
@@ -514,8 +508,7 @@ for (i in c (1, 2)) {
         polygon (c (3.5, 6.5, 6.5, 3.5), c (0, 0, 100, 100),
                  col = "#eeeeee", border = NA)
 }
-axis (1, at = c (2, 5), tick = FALSE,
-      labels = c ("static background", "rotating background"))
+axis (1, at = c (2, 5), tick = FALSE, labels = bg.lab)
 legend ("topright", inset = 0.05, pch = 22, pt.cex = 2, pt.bg = obj.col,
         legend = c ("low object", "mid object", "high object"))
 dummy <- dev.off ()
