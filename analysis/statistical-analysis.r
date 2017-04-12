@@ -20,6 +20,12 @@ side.col <- c ("firebrick1", "deepskyblue")
 boxplot.pars <- list (boxwex  = 0.5, bty = "n")
 boxplot.ylab <- "threshold angle (degrees)"
 
+### ** Labels for the conditions
+chair.lab <- c ("left tilt", "upright", "right tilt")
+bg.lab <- c ("static periphery", "rotating periphery")
+scene.lab <- c ("scene on the left", "scene on the right")
+table.lab <- c ("table to the left", "table to the right")
+
 ### ** Experiments
 
 ### *** Room 126
@@ -193,8 +199,6 @@ show (ranef (fm))
 ### ***** Points shapes & sizes + labels
 obj.pch <- c (18, 16, 15) # diamond, circle, square
 obj.cex <- c (2.5, 2, 2) # diamond, circle, square
-chair.lab <- c ("left tilt", "upright", "right tilt")
-bg.lab <- c ("static background", "rotating background")
 
 ### ***** Panel A
 pred <- predict (fm.r126.bg.obj,
