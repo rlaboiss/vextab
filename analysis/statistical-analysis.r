@@ -410,6 +410,12 @@ par (xpd = NA)
 text (14, 16.5, adj = c (1, 0), labels = "B", cex = 2)
 dummy <- dev.off ()
 
+### ***** Compose the Fig. 5
+system (paste ("pdfjam Fig-5-A.pdf Fig-5-B.pdf",
+               "--no-landscape --frame true --nup 2x1 --frame false",
+               "--outfile tmp.pdf"))
+system ("pdfcrop --margins 10 tmp.pdf Fig-5.pdf")
+
 ### **** Effect of background on horizontal detection
 scene.mirror.hor <- subset (scene.mirror, stimulus == "horizontal")
 idx <- which (scene.mirror.hor$table.side == "right")
