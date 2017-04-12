@@ -546,6 +546,7 @@ show (ranef (fm))
 
 fe <- fixef (fm)
 
+### **** Rudimentary plot of results
 pdf (file = "no-table-object.pdf", width = 4, height = 5)
 par (mar = c (4, 5, 0.5, 0))
 plot (c (1, 1, 2, 2),
