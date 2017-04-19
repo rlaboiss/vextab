@@ -553,13 +553,13 @@ show (fm)
 ### *** No table
 
 ### **** Select the data
-no.table <- subset (obj.stab.psycho, experiment == "no-table")
+df.no.table <- subset (obj.stab.psycho, experiment == "no-table")
 
 ### **** Plot the raw results
 pdf (file = "no-table-object.pdf")
 par (mar = c (4, 5, 0.5, 0))
 for (i in c (1, 2)) {
-    boxplot (threshold ~ object.num * background * table.side, no.table,
+    boxplot (threshold ~ object.num * background * table.side, df.no.table,
              frame = FALSE, las = 1, xlab = "", ylab = boxplot.ylab,
              xaxt = "n", pars = boxplot.pars,
              col = rep (obj.col, 2), add = (i == 2))
@@ -573,7 +573,7 @@ legend ("topright", inset = 0.05, pch = 22, pt.cex = 2, pt.bg = obj.col,
 dummy <- dev.off ()
 
 fm <- lmer (threshold ~ background * object.num * table.side + (1 | subject),
-            no.table)
+            df.no.table)
 show (anova (fm))
 show (fixef (fm))
 show (ranef (fm))
