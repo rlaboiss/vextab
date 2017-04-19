@@ -11,7 +11,8 @@ obj.stab.psycho <- read.csv ("obj-stab-psycho.csv")
 ### ** Transform the discrete factors chair and object into numeric
 obj.stab.psycho$object.num <- c (1, -1, 0) [as.numeric(obj.stab.psycho$object)]
 obj.stab.psycho$chair.num <- c (-1, 1, 0) [as.numeric (obj.stab.psycho$chair)]
-obj.stab.psycho$table.side.num <- c (-1, 0, 1) [as.numeric (obj.stab.psycho$table.side)]
+obj.stab.psycho$table.side.num <- (c (-1, 0, 1)
+                                   [as.numeric (obj.stab.psycho$table.side)])
 
 ### ** Boxplot parameters
 obj.col <- c ("pink", "cyan", "wheat")
