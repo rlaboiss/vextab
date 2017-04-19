@@ -39,17 +39,17 @@ boxplot.ylab <- "threshold angle (degrees)"
 ### ** Plot labels
 
 ### *** Labels for the conditions
-chair.lab <- c ("left tilt", "upright", "right tilt")
-bg.lab <- c ("static periphery", "rotating periphery")
-scene.lab <- c ("scene on the left", "scene on the right")
-table.lab <- c ("table to the left", "table to the right")
-com.lab <- c ("low COM", "mid COM", "high COM")
+chair.lab <- c ("Left Tilt", "Upright", "Right Tilt")
+bg.lab <- c ("Static Periphery", "Rotating Periphery")
+scene.lab <- c ("Scene on the Left", "Scene on the Right")
+table.lab <- c ("Table to the Left", "Table to the Right")
+com.lab <- c ("Low COM", "Mid COM", "High COM")
 
 ### *** Labels for the axes
 dsvh.xlab <- expression (paste (Delta, "SVH (degrees)"))
 dca.ylab = expression (paste (Delta, "CA (degrees)"))
-ca.ylab <- "critical angle (degrees)"
-svh.ylab <- "subjective visual horizontal (degrees)"
+ca.ylab <- "Critical Angle (degrees)"
+svh.ylab <- "Subjective Visual Horizontal (degrees)"
 
 ### ** Experiments
 
@@ -448,8 +448,8 @@ y <- -2 * (re [,2]  + fe [3])
 y.min <- min (y)
 y.max <- 18
 plot (x, y, pch = 19, cex = 1.5, las = 1,  xlim = c (15, 40), col = "#00000080",
-      bty = "n", xlab = "mean critical angle (degrees)",
-      ylab = "left/right side effect (degrees)")
+      bty = "n", xlab = "Mean Critical Angle (degrees)",
+      ylab = "Left/Right Side Effect (degrees)")
 abline (h = -2 * fe [3], col = "#00000080", lwd = 2, lty = "21")
 abline (v = fe [1], col = "#00000080", lwd = 2, lty = "21")
 par (xpd = NA)
@@ -611,12 +611,13 @@ pdf (file = "Fig-6.pdf", width = 7, height = 5)
 par (mar = c (4.5, 5, 4.5, 0), xpd = FALSE)
 plot (0, 0, type = "n", xlim = c (0.5, 12.5), bty = "n", xaxt = "n", las = 1,
       ylim = c (y.min, y.max), xlab = "", ylab = ca.ylab)
-axis (1, at = c (3.5, 9.5), labels = c ("with table", "without table"), line = 1)
+axis (1, at = c (3.5, 9.5), labels = c ("With Table", "Without Table"),
+      line = 1)
 for (i in c (1, 2)) {
     polygon (6 * (i - 1) + c (3.5, 6.5, 6.5, 3.5),
              c (0, 0, 100, 100), col = "#eeeeee", border = NA)
     axis (3, at = 6 * (i - 1) + c (2, 5), line = 1,
-          labels = c ("static", "rotating"))
+          labels = c ("Static", "Rotating"))
 }
 for (i in seq (1, 12))
     lines (rep (i, 2), pred [i] + se [i] * c(-1, 1), lwd = 3)
