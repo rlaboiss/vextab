@@ -74,8 +74,7 @@ for (i in c (1, 2)) {
         polygon (c (3.5, 6.5, 6.5, 3.5), c (0, 0, 100, 100),
                  col = "#eeeeee", border = NA)
 }
-axis (1, at = c (2, 5, 8), tick = FALSE,
-      labels = c ("chair left", "chair upright", "chair right"))
+axis (1, at = c (2, 5, 8), tick = FALSE, labels = chair.lab)
 legend ("topright", inset = 0.05, pch = 22, pt.cex = 2, pt.bg = obj.col,
         legend = c ("low object", "mid object", "high object"))
 dummy <- dev.off ()
@@ -141,8 +140,7 @@ par (mar = c (4, 5, 0.5, 0))
 boxplot (threshold ~ chair.num, df.r126.chair.hor, frame = FALSE,
          las = 1, xlab = "", ylab = boxplot.ylab,
          xaxt = "n", pars = list (boxwex  = 0.4, bty = "n"))
-axis (1, at = seq (1, 3), tick = FALSE,
-      labels = c ("chair left", "chair upright", "chair right"))
+axis (1, at = seq (1, 3), tick = FALSE, labels = chair.lab)
 dummy <- dev.off ()
 
 ### **** Plot random effects for horizontality vs. object stability models
