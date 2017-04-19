@@ -258,7 +258,7 @@ se <- aggregate (residuals ~ object.num * background,
                  function (x) sd (x) / sqrt (length (x)))$residuals
 y.min <- 27.5
 y.max <- 37
-pdf (file = "Fig-2-A.pdf", width = 5, height = 5)
+pdf (file = "Fig-2-a.pdf", width = 5, height = 5)
 par (mar = c (2, 4, 1, 0))
 plot (0, 0, xlim = c (0.5, 6.5), bty = "n", xaxt = "n", las = 1,
       ylim = c (y.min, y.max), xlab = "", ylab = ca.ylab, type = "n")
@@ -271,7 +271,7 @@ for (i in seq (1, 6))
 legend ("bottomleft", inset = c (0.05, 0.1), pch = obj.pch, bty = "n",
         pt.cex = 0.75 * obj.cex, legend = com.lab)
 par (xpd = NA)
-text (-0.2, y.max, adj = c (0, 0), labels = "A", cex = 2)
+text (-0.2, y.max, adj = c (0, 0), labels = "a", cex = 2)
 dummy <- dev.off ()
 
 ### ***** Panel B
@@ -282,7 +282,7 @@ se <- aggregate (residuals ~ background, df.r126.bg.hor,
                  function (x) sd (x) / sqrt (length (x)))$residuals
 y.min <- -4
 y.max <- 7
-pdf (file = "Fig-2-B.pdf", width = 5, height = 4)
+pdf (file = "Fig-2-b.pdf", width = 5, height = 4)
 par (mar = c (4.5, 4, 2.0, 0))
 plot (0, 0, xlim = c (0.5, 6.5), bty = "n", xaxt = "n", las = 1,
       ylim = c (y.min, y.max), xlab = "", ylab = svh.ylab, type = "n")
@@ -293,7 +293,7 @@ for (i in seq (1, 2))
     lines (rep ((i - 1) * 3 + 2, 2), pred [i] + se [i] * c(-1, 1), lwd = 3)
 points (c (2, 5), pred, pch = 21, cex = 1.8, bg = "white")
 par (xpd = NA)
-text (-0.2, y.max + 0.8, adj = c (0, -0.2), labels = "B", cex = 2)
+text (-0.2, y.max + 0.8, adj = c (0, -0.2), labels = "b", cex = 2)
 dummy <- dev.off ()
 
 ### ***** Panel C
@@ -304,7 +304,7 @@ pred <- predict (fm.r126.chair.obj,
 se <- aggregate (residuals ~ object.num * chair.num,
                  df.r126.chair.obj,
                  function (x) sd (x) / sqrt (length (x)))$residuals
-pdf (file = "Fig-2-C.pdf", width = 5, height = 5)
+pdf (file = "Fig-2-c.pdf", width = 5, height = 5)
 par (mar = c (2, 4, 1, 0))
 y.min <- 27.5
 y.max <- 37
@@ -317,7 +317,7 @@ points (pred, pch = obj.pch, cex = obj.cex)
 for (i in seq (1, 9))
     lines (rep (i, 2), pred [i] + se [i] * c(-1, 1), lwd = 3)
 par (xpd = NA)
-text (-0.2, y.max, adj = c (0, -0.2), labels = "C", cex = 2)
+text (-0.2, y.max, adj = c (0, -0.2), labels = "c", cex = 2)
 dummy <- dev.off ()
 
 ### ***** Panel D
@@ -328,7 +328,7 @@ se <- aggregate (residuals ~ chair.num, df.r126.chair.hor,
                  function (x) sd (x) / sqrt (length (x)))$residuals
 y.min <- -4
 y.max <- 7
-pdf (file = "Fig-2-D.pdf", width = 5, height = 4)
+pdf (file = "Fig-2-d.pdf", width = 5, height = 4)
 par (mar = c (4.5, 5, 2.0, 0))
 plot (0, 0, xlim = c (0.5, 9.5), bty = "n", xaxt = "n", las = 1,
       ylim = c (y.min, y.max), xlab = "", ylab = svh.ylab, type = "n")
@@ -339,11 +339,11 @@ for (i in seq (1, 3))
     lines (rep ((i - 1) * 3 + 2, 2), pred [i] + se [i] * c(-1, 1), lwd = 3)
 points (c (2, 5, 8), pred, pch = 21, cex = 1.8, bg = "white")
 par (xpd = NA)
-text (-0.2, y.max + 0.8, adj = c (0, -0.2), labels = "D", cex = 2)
+text (-0.2, y.max + 0.8, adj = c (0, -0.2), labels = "d", cex = 2)
 dummy <- dev.off ()
 
 ### ***** Compose Figure
-system (paste ("pdfjam Fig-2-A.pdf Fig-2-C.pdf Fig-2-B.pdf Fig-2-D.pdf",
+system (paste ("pdfjam Fig-2-a.pdf Fig-2-c.pdf Fig-2-b.pdf Fig-2-d.pdf",
                "--no-landscape --frame true --nup 2x2 --frame false",
                "--outfile tmp.pdf"))
 system ("pdfcrop --margins 10 tmp.pdf Fig-2.pdf")
@@ -420,7 +420,7 @@ se <- aggregate (residuals ~ object.num * table.side.num, scene.mirror.obj,
                  function (x) sd (x) / sqrt (length (x)))$residuals
 y.min <- min (pred - se)
 y.max <- max (pred + se)
-pdf (file = "Fig-5-A.pdf", width = 5, height = 5)
+pdf (file = "Fig-5-a.pdf", width = 5, height = 5)
 par (mar = c (4.5, 5, 2.0, 0))
 plot (0, 0, type = "n", xlim = c (0.5, 6.5), bty = "n", xaxt = "n", las = 1,
       ylim = c (y.min, y.max), xlab = "", ylab = ca.ylab)
@@ -433,7 +433,7 @@ points (pred, pch = obj.pch, cex = obj.cex)
 legend ("bottomleft", inset = 0.05, pch = obj.pch, pt.cex = 0.75 * obj.cex,
         bty = "n", legend = com.lab)
 par (xpd = NA)
-text (-0.2, y.max + 0.8, adj = c (0, -0.2), labels = "A", cex = 2)
+text (-0.2, y.max + 0.8, adj = c (0, -0.2), labels = "a", cex = 2)
 dummy <- dev.off ()
 
 ### ***** Plot the BLUP
@@ -441,7 +441,7 @@ re <- ranef (fm.scene.mirror)$subject
 n <- nrow (re)
 fe <- fixef (fm.scene.mirror)
 
-pdf (file = "Fig-5-B.pdf", width = 5, height = 5)
+pdf (file = "Fig-5-b.pdf", width = 5, height = 5)
 par (mar = c (5, 5.5, 2, 0.1))
 x <- re [,1] + fe [1]
 y <- -2 * (re [,2]  + fe [3])
@@ -453,11 +453,11 @@ plot (x, y, pch = 19, cex = 1.5, las = 1,  xlim = c (15, 40), col = "#00000080",
 abline (h = -2 * fe [3], col = "#00000080", lwd = 2, lty = "21")
 abline (v = fe [1], col = "#00000080", lwd = 2, lty = "21")
 par (xpd = NA)
-text (14, 16.5, adj = c (1, 0), labels = "B", cex = 2)
+text (14, 18, adj = c (1, 0), labels = "b", cex = 2)
 dummy <- dev.off ()
 
 ### ***** Compose the Fig. 5
-system (paste ("pdfjam Fig-5-A.pdf Fig-5-B.pdf",
+system (paste ("pdfjam Fig-5-a.pdf Fig-5-b.pdf",
                "--no-landscape --frame true --nup 2x1 --frame false",
                "--outfile tmp.pdf"))
 system ("pdfcrop --margins 10 tmp.pdf Fig-5.pdf")
