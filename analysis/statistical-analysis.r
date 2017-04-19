@@ -35,12 +35,21 @@ side.col <- c ("firebrick1", "deepskyblue")
 boxplot.pars <- list (boxwex  = 0.5, bty = "n")
 boxplot.ylab <- "threshold angle (degrees)"
 
-### ** Labels for the conditions
+
+### ** Plot labels
+
+### *** Labels for the conditions
 chair.lab <- c ("left tilt", "upright", "right tilt")
 bg.lab <- c ("static periphery", "rotating periphery")
 scene.lab <- c ("scene on the left", "scene on the right")
 table.lab <- c ("table to the left", "table to the right")
 com.lab <- c ("low COM", "mid COM", "high COM")
+
+### *** Labels for the axes
+dsvh.xlab <- expression (paste (Delta, "SVH (degrees)"))
+dca.ylab = expression (paste (Delta, "CA (degrees)"))
+ca.ylab <- "critical angle (degrees)"
+svh.ylab <- "subjective visual horizontal (degrees)"
 
 ### ** Experiments
 
@@ -151,8 +160,7 @@ par (mar = c (4, 5, 0.5, 0))
 plot (fe.r126.bg.hor [2] + re.r126.bg.hor$subject [, 1],
       fe.r126.bg.obj [2] + re.r126.bg.obj$subject [, 1],
       pch = 19, bty = "n", las = 1, xlim = c (0,7),
-      xlab = expression (paste (Delta, "SVV (degrees)")),
-      ylab = expression (paste (Delta, "CA (degrees)")))
+      xlab = dsvh.xlab, ylab = dca.ylab)
 dummy <- dev.off ()
 
 pdf (file = "room-126-ranef-cor-diag.pdf")
@@ -160,8 +168,7 @@ par (mar = c (4, 5, 0.5, 0))
 plot (fe.r126.bg.hor [2] + re.r126.bg.hor$subject [, 1],
       fe.r126.bg.obj [2] + re.r126.bg.obj$subject [, 1],
       pch = 19, bty = "n", las = 1, xlim = c (0,7),
-      xlab = expression (paste (Delta, "SVV (degrees)")),
-      ylab = expression (paste (Delta, "CA (degrees)")))
+      xlab = dsvh.xlab, ylab = dca.ylab)
 abline (0, 1, lty = 2, col = "gray", lwd = 2)
 dummy <- dev.off ()
 
@@ -254,8 +261,7 @@ y.max <- 37
 pdf (file = "Fig-2-A.pdf", width = 5, height = 5)
 par (mar = c (2, 4, 1, 0))
 plot (0, 0, xlim = c (0.5, 6.5), bty = "n", xaxt = "n", las = 1,
-      ylim = c (y.min, y.max),
-      xlab = "", ylab = "critical angle (degrees)", type = "n")
+      ylim = c (y.min, y.max), xlab = "", ylab = ca.ylab, type = "n")
 axis (1, at = c (2, 5), tick = FALSE, labels = bg.lab)
 polygon (c (3.5, 6.5, 6.5, 3.5), c (-50, -50, 38, 38), col = "#eeeeee",
          border = NA)
@@ -279,8 +285,7 @@ y.max <- 7
 pdf (file = "Fig-2-B.pdf", width = 5, height = 4)
 par (mar = c (4.5, 4, 2.0, 0))
 plot (0, 0, xlim = c (0.5, 6.5), bty = "n", xaxt = "n", las = 1,
-      ylim = c (y.min, y.max), xlab = "",
-      ylab = "subjective visual horizontal (degrees)", type = "n")
+      ylim = c (y.min, y.max), xlab = "", ylab = svh.ylab, type = "n")
 axis (1, at = c (2, 5), tick = FALSE, labels = bg.lab)
 polygon (c (3.5, 6.5, 6.5, 3.5), c (-50, -50, 38, 38), col = "#eeeeee",
          border = NA)
@@ -304,9 +309,8 @@ par (mar = c (2, 4, 1, 0))
 y.min <- 27.5
 y.max <- 37
 plot (0, 0, xlim = c (0.5, 9.5), bty = "n", xaxt = "n", las = 1, type = "n",
-      ylim = c (y.min, y.max), xlab = "", ylab = "critical angle (degrees)")
-axis (1, at = c (2, 5, 8), tick = FALSE,
-      labels = c ("left tilt", "upright", "right tilt"))
+      ylim = c (y.min, y.max), xlab = "", ylab = ca.ylab)
+axis (1, at = c (2, 5, 8), tick = FALSE, labels = chair.lab)
 polygon (c (3.5, 6.5, 6.5, 3.5), c (-50, -50, 38, 38), col = "#eeeeee",
          border = NA)
 points (pred, pch = obj.pch, cex = obj.cex)
@@ -327,8 +331,7 @@ y.max <- 7
 pdf (file = "Fig-2-D.pdf", width = 5, height = 4)
 par (mar = c (4.5, 5, 2.0, 0))
 plot (0, 0, xlim = c (0.5, 9.5), bty = "n", xaxt = "n", las = 1,
-      ylim = c (y.min, y.max),
-      xlab = "", ylab = "subjective visual horizontal (degrees)", type = "n")
+      ylim = c (y.min, y.max), xlab = "", ylab = svh.ylab, type = "n")
 axis (1, at = c (2, 5, 8), tick = FALSE, labels = chair.lab)
 polygon (c (3.5, 6.5, 6.5, 3.5), c (-50, -50, 38, 38), col = "#eeeeee",
          border = NA)
@@ -355,8 +358,7 @@ delta.ca <- aggregate (threshold ~ subject,
 pdf (file = "Fig-3.pdf", width = 5, height = 5)
 par (mar = c (5, 4, 0, 0))
 plot (delta.hor$threshold, delta.ca$threshold, bty = "n", las = 1, pch = 19,
-      xlab = expression (paste (Delta, "SVH (degrees)")),
-      ylab = expression (paste (Delta, "CA (degrees)")), type = "n")
+      xlab = dsvh.xlab, ylab = dca.ylab, type = "n")
 abline (0, 1, col = "gray", lwd = 2)
 points (delta.hor$threshold, delta.ca$threshold, pch = 19)
 points (mean (delta.hor$threshold), mean (delta.ca$threshold), pch = 18,
@@ -421,7 +423,7 @@ y.max <- max (pred + se)
 pdf (file = "Fig-5-A.pdf", width = 5, height = 5)
 par (mar = c (4.5, 5, 2.0, 0))
 plot (0, 0, type = "n", xlim = c (0.5, 6.5), bty = "n", xaxt = "n", las = 1,
-      ylim = c (y.min, y.max), xlab = "", ylab = "critical angle (degrees)")
+      ylim = c (y.min, y.max), xlab = "", ylab = ca.ylab)
 axis (1, at = c (2, 5), tick = FALSE, labels = scene.lab)
 polygon (c (3.5, 6.5, 6.5, 3.5), c (-50, -50, 38, 38), col = "#eeeeee",
          border = NA)
@@ -586,7 +588,7 @@ plot (c (1, 1, 2, 2),
          fe [1] + fe [2] + fe [4] + fe [6]),
       pch = 19, col = rep (c ("blue", "red"), 2), bty = "n",
       xlim = c (0.7, 2.3), cex = 1.3,
-      las = 1, xaxt = "n", xlab = "", ylab = "critical angle (degrees)")
+      las = 1, xaxt = "n", xlab = "", ylab = ca.ylab)
 lines (c (1, 2), c (fe[1], fe [1] + fe [4]), col = "blue")
 lines (c (1, 2), c (fe [1] + fe [2], fe [1] + fe [2] + fe [4] + fe [6]),
        col = "red")
@@ -608,7 +610,7 @@ y.max <- max (pred + se)
 pdf (file = "Fig-6.pdf", width = 7, height = 5)
 par (mar = c (4.5, 5, 4.5, 0), xpd = FALSE)
 plot (0, 0, type = "n", xlim = c (0.5, 12.5), bty = "n", xaxt = "n", las = 1,
-      ylim = c (y.min, y.max), xlab = "", ylab = "critical angle (degrees)")
+      ylim = c (y.min, y.max), xlab = "", ylab = ca.ylab)
 axis (1, at = c (3.5, 9.5), labels = c ("with table", "without table"), line = 1)
 for (i in c (1, 2)) {
     polygon (6 * (i - 1) + c (3.5, 6.5, 6.5, 3.5),
