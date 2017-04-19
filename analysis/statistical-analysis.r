@@ -40,6 +40,7 @@ chair.lab <- c ("left tilt", "upright", "right tilt")
 bg.lab <- c ("static periphery", "rotating periphery")
 scene.lab <- c ("scene on the left", "scene on the right")
 table.lab <- c ("table to the left", "table to the right")
+com.lab <- c ("low COM", "mid COM", "high COM")
 
 ### ** Experiments
 
@@ -76,7 +77,7 @@ for (i in c (1, 2)) {
 }
 axis (1, at = c (2, 5, 8), tick = FALSE, labels = chair.lab)
 legend ("topright", inset = 0.05, pch = 22, pt.cex = 2, pt.bg = obj.col,
-        legend = c ("low object", "mid object", "high object"))
+        legend = com.lab)
 dummy <- dev.off ()
 
 ### ***** Effect of object shape and background in upright position
@@ -103,7 +104,7 @@ for (i in c (1, 2)) {
 }
 axis (1, at = c (2, 5), tick = FALSE, labels = bg.lab)
 legend ("topright", inset = 0.05, pch = 22, pt.cex = 2, pt.bg = obj.col,
-        legend = c ("low object", "mid object", "high object"))
+        legend = com.lab)
 dummy <- dev.off ()
 
 ### ***** Effect of background in upright position on horizontal estimation
@@ -388,7 +389,7 @@ for (i in c (1, 2)) {
 }
 axis (1, at = c (2, 5), tick = FALSE, labels = scene.lab)
 legend ("topright", inset = 0.05, pch = 22, pt.cex = 2, pt.bg = obj.col,
-        legend = c ("low object", "mid object", "high object"))
+        legend = com.lab)
 dummy <- dev.off ()
 
 ### ***** Fit the model
@@ -428,7 +429,7 @@ for (i in seq (1, 6))
     lines (rep (i, 2), pred [i] + se [i] * c(-1, 1), lwd = 3)
 points (pred, pch = obj.pch, cex = obj.cex)
 legend ("bottomleft", inset = 0.05, pch = obj.pch, pt.cex = 0.75 * obj.cex,
-        legend = c ("low GC", "mid GC", "high GC"))
+        legend = com.lab)
 par (xpd = NA)
 text (-0.2, y.max + 0.8, adj = c (0, -0.2), labels = "A", cex = 2)
 dummy <- dev.off ()
@@ -566,7 +567,7 @@ for (i in c (1, 2)) {
 }
 axis (1, at = c (2, 5), tick = FALSE, labels = bg.lab)
 legend ("topright", inset = 0.05, pch = 22, pt.cex = 2, pt.bg = obj.col,
-        legend = c ("low object", "mid object", "high object"))
+        legend = com.lab)
 dummy <- dev.off ()
 
 fm <- lmer (threshold ~ background * object.num * table.side + (1 | subject),
@@ -619,5 +620,5 @@ for (i in seq (1, 12))
     lines (rep (i, 2), pred [i] + se [i] * c(-1, 1), lwd = 3)
 points (pred, pch = obj.pch, cex = obj.cex)
 legend ("topleft", inset = 0.05, pch = obj.pch, pt.cex = 0.75 * obj.cex,
-        legend = c ("low GC", "mid GC", "high GC"))
+        legend = com.lab)
 dummy <- dev.off ()
