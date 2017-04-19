@@ -393,12 +393,12 @@ legend ("topright", inset = 0.05, pch = 22, pt.cex = 2, pt.bg = obj.col,
 dummy <- dev.off ()
 
 ### ***** Fit the model
-fm <- lmer (threshold ~ object.num * table.side.num
-                        + (table.side.num | subject),
-            scene.mirror.obj)
-show (anova (fm))
-show (fixef (fm))
-show (ranef (fm))
+fm.scene.mirror <- lmer (threshold ~ object.num * table.side.num
+                                     + (table.side.num | subject),
+                         scene.mirror.obj)
+show (anova (fm.scene.mirror))
+show (fixef (fm.scene.mirror))
+show (ranef (fm.scene.mirror))
 
 fm.no.Intercept <- lmer (threshold ~ object.num * table.side.num
                                      + (0 + table.side.num | subject),
@@ -406,14 +406,14 @@ fm.no.Intercept <- lmer (threshold ~ object.num * table.side.num
 fm.no.table.side.num <- lmer (threshold ~ object.num * table.side.num
                                           + (1 | subject),
                               scene.mirror.obj)
-show (anova (fm.no.Intercept, fm))
-show (anova (fm.no.table.side.num, fm))
+show (anova (fm.no.Intercept, fm.scene.mirror))
+show (anova (fm.no.table.side.num, fm.scene.mirror))
 
 ### ***** Plot the results
-pred <- predict (fm, expand.grid (object.num = c (-1, 0, 1),
-                                  table.side.num = c (-1, 1)),
+pred <- predict (fm.scene.mirror, expand.grid (object.num = c (-1, 0, 1),
+                                               table.side.num = c (-1, 1)),
                  re.form = NA)
-scene.mirror.obj$residuals <- residuals (fm)
+scene.mirror.obj$residuals <- residuals (fm.scene.mirror)
 se <- aggregate (residuals ~ object.num * table.side.num, scene.mirror.obj,
                  function (x) sd (x) / sqrt (length (x)))$residuals
 y.min <- min (pred - se)
@@ -435,9 +435,9 @@ text (-0.2, y.max + 0.8, adj = c (0, -0.2), labels = "A", cex = 2)
 dummy <- dev.off ()
 
 ### ***** Plot the BLUP
-re <- ranef (fm)$subject
+re <- ranef (fm.scene.mirror)$subject
 n <- nrow (re)
-fe <- fixef (fm)
+fe <- fixef (fm.scene.mirror)
 
 pdf (file = "Fig-5-B.pdf", width = 5, height = 5)
 par (mar = c (5, 5.5, 2, 0.1))
