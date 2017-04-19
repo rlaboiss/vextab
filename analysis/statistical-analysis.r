@@ -572,13 +572,14 @@ legend ("topright", inset = 0.05, pch = 22, pt.cex = 2, pt.bg = obj.col,
         legend = com.lab)
 dummy <- dev.off ()
 
-fm <- lmer (threshold ~ background * object.num * table.side + (1 | subject),
-            df.no.table)
-show (anova (fm))
-show (fixef (fm))
-show (ranef (fm))
+fm.no.table <- lmer (threshold ~ background * object.num * table.side
+                                 + (1 | subject),
+                     df.no.table)
+show (anova (fm.no.table))
+show (fixef (fm.no.table))
+show (ranef (fm.no.table))
 
-fe <- fixef (fm)
+fe <- fixef (fm.no.table)
 
 ### **** Rudimentary plot of results
 pdf (file = "no-table-object.pdf", width = 4, height = 5)
@@ -598,11 +599,11 @@ legend ("right", col = c ("red", "blue"), legend = c ("rotating", "static"),
 dummy <- dev.off ()
 
 ### ***** Plot the results
-pred <- predict (fm, expand.grid (object.num = c (-1, 0, 1),
-                                  background = c ("static", "vection"),
-                                  table.side = c ("left", "none")),
+pred <- predict (fm.no.table, expand.grid (object.num = c (-1, 0, 1),
+                                           background = c ("static", "vection"),
+                                           table.side = c ("left", "none")),
                  re.form = NA)
-no.table$residuals <- residuals (fm)
+no.table$residuals <- residuals (fm.no.table)
 se <- aggregate (residuals ~ object.num * table.side * background,
                  no.table, function (x) sd (x) / sqrt (length (x)))$residuals
 y.min <- min (pred - se)
