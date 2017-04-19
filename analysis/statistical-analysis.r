@@ -4,6 +4,20 @@
 ### ** Load the necessary libraries
 library (lme4)
 library (lmerTest)
+library (HDInterval)
+
+### ** Function for computing confidence intervals of predicted values
+ci.pred <- function (fit.model, new.data = NA, pred.fun = NA, nb.sim = 1000) {
+    if (! is.function (pred.fun))
+        pred.fun <- function (fit.model)
+                        predict (fit.model, newdata = new.data, re.form = NA)
+    n <- length (pred.fun (fit.model))
+    b <- bootMer (fit.model, pred.fun, nsim = nb.sim)
+    ci <- c ()
+    for (i in seq (1, n))
+        ci <- rbind (ci, hdi (b$t [, i]))
+    return (list (ci = ci, t = b$t))
+}
 
 ### ** Load the results
 obj.stab.psycho <- read.csv ("obj-stab-psycho.csv")
