@@ -68,7 +68,6 @@ df.r126.chair.obj <- subset (room.126,
                              stimulus == "object" & background == "static")
 fm.r126.chair.obj <- lmer (threshold ~ object.num * chair.num
                            + (1 | subject), df.r126.chair.obj)
-df.r126.chair.obj$residuals <- residuals (fm.r126.chair.obj)
 
 anova (fm.r126.chair.obj)
 fixef (fm.r126.chair.obj)
@@ -94,7 +93,6 @@ df.r126.bg.obj <- subset (room.126,
                           stimulus == "object" & chair == "upright")
 fm.r126.bg.obj <- lmer (threshold ~ background * object.num
                         + (1 | subject), df.r126.bg.obj)
-df.r126.bg.obj$residuals <- residuals (fm.r126.bg.obj)
 anova (fm.r126.bg.obj)
 fixef (fm.r126.bg.obj)
 
@@ -120,7 +118,6 @@ dummy <- dev.off ()
 df.r126.bg.hor <- subset (room.126,
                           stimulus == "horizontal" & chair == "upright")
 fm.r126.bg.hor <- lmer (threshold ~ background + (1 | subject), df.r126.bg.hor)
-df.r126.bg.hor$residuals <- residuals (fm.r126.bg.hor)
 anova (fm.r126.bg.hor)
 fixef (fm.r126.bg.hor)
 
@@ -141,7 +138,6 @@ df.r126.chair.hor <- subset (room.126,
 df.r126.chair.hor$object <- factor (as.character (df.r126.chair.hor$object))
 fm.r126.chair.hor <- lmer (threshold ~ chair.num + (0 + chair.num | subject),
                            df.r126.chair.hor)
-df.r126.chair.hor$residuals <- residuals (fm.r126.chair.hor)
 anova (fm.r126.chair.hor)
 fixef (fm.r126.chair.hor)
 
@@ -400,14 +396,12 @@ show (anova (fm.no.Intercept, fm.scene.mirror))
 show (anova (fm.no.table.side.num, fm.scene.mirror))
 
 ### ***** Plot the results
-pred <- predict (fm.scene.mirror, expand.grid (object.num = c (-1, 0, 1),
-                                               table.side.num = c (-1, 1)),
-                 re.form = NA)
-scene.mirror.obj$residuals <- residuals (fm.scene.mirror)
-se <- aggregate (residuals ~ object.num * table.side.num, scene.mirror.obj,
-                 function (x) sd (x) / sqrt (length (x)))$residuals
-y.min <- min (pred - se)
-y.max <- max (pred + se)
+nd <- expand.grid (object.num = c (-1, 0, 1),
+                   table.side.num = c (-1, 1))
+pred <- predict (fm.scene.mirror, nd, re.form = NA)
+ci <- ci.pred (fm.scene.mirror, nd)$ci
+y.min <- min (ci [, 1])
+y.max <- max (ci [, 2])
 pdf (file = "Fig-5-a.pdf", width = pdf.wd, height = pdf.ht)
 par (mar = c (4.5, 5, 2.0, 0))
 plot (0, 0, type = "n", xlim = c (0.5, 6.5), bty = "n", xaxt = "n", las = 1,
@@ -416,7 +410,7 @@ axis (1, at = c (2, 5), tick = FALSE, labels = scene.lab)
 polygon (c (3.5, 6.5, 6.5, 3.5), c (-50, -50, 38, 38), col = gray.box,
          border = NA)
 for (i in seq (1, 6))
-    lines (rep (i, 2), pred [i] + se [i] * c(-1, 1), lwd = 3)
+    lines (rep (i, 2), ci [i, ], lwd = 3)
 points (pred, pch = obj.pch, cex = obj.cex)
 legend ("bottomleft", inset = 0.05, pch = obj.pch, pt.cex = 0.75 * obj.cex,
         bty = "n", legend = com.lab)
