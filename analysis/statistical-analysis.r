@@ -244,9 +244,12 @@ show (ranef (fm))
 
 ### **** Results Exp. 1 (Fig. 2)
 
-### ***** Points shapes & sizes + labels
+### ***** General plot paramaters
 obj.pch <- c (18, 16, 15) # diamond, circle, square
 obj.cex <- c (2.5, 2, 2) # diamond, circle, square
+gray.box <- "#eeeeee"
+pdf.wd <- 4.5
+pdf.ht <- 4.5
 
 ### ***** Panel A
 pred <- predict (fm.r126.bg.obj,
@@ -263,7 +266,7 @@ par (mar = c (2, 4, 1, 0))
 plot (0, 0, xlim = c (0.5, 6.5), bty = "n", xaxt = "n", las = 1,
       ylim = c (y.min, y.max), xlab = "", ylab = ca.ylab, type = "n")
 axis (1, at = c (2, 5), tick = FALSE, labels = bg.lab)
-polygon (c (3.5, 6.5, 6.5, 3.5), c (-50, -50, 38, 38), col = "#eeeeee",
+polygon (c (3.5, 6.5, 6.5, 3.5), c (-50, -50, y.max, y.max), col = gray.box,
          border = NA)
 points (pred, pch = obj.pch, cex = obj.cex)
 for (i in seq (1, 6))
@@ -287,7 +290,7 @@ par (mar = c (4.5, 4, 2.0, 0))
 plot (0, 0, xlim = c (0.5, 6.5), bty = "n", xaxt = "n", las = 1,
       ylim = c (y.min, y.max), xlab = "", ylab = svh.ylab, type = "n")
 axis (1, at = c (2, 5), tick = FALSE, labels = bg.lab)
-polygon (c (3.5, 6.5, 6.5, 3.5), c (-50, -50, 38, 38), col = "#eeeeee",
+polygon (c (3.5, 6.5, 6.5, 3.5), c (-50, -50, y.max, y.max), col = gray.box,
          border = NA)
 for (i in seq (1, 2))
     lines (rep ((i - 1) * 3 + 2, 2), pred [i] + se [i] * c(-1, 1), lwd = 3)
@@ -311,7 +314,7 @@ y.max <- 37
 plot (0, 0, xlim = c (0.5, 9.5), bty = "n", xaxt = "n", las = 1, type = "n",
       ylim = c (y.min, y.max), xlab = "", ylab = ca.ylab)
 axis (1, at = c (2, 5, 8), tick = FALSE, labels = chair.lab)
-polygon (c (3.5, 6.5, 6.5, 3.5), c (-50, -50, 38, 38), col = "#eeeeee",
+polygon (c (3.5, 6.5, 6.5, 3.5), c (-50, -50, y.max, y.max), col = gray.box,
          border = NA)
 points (pred, pch = obj.pch, cex = obj.cex)
 for (i in seq (1, 9))
@@ -333,7 +336,7 @@ par (mar = c (4.5, 5, 2.0, 0))
 plot (0, 0, xlim = c (0.5, 9.5), bty = "n", xaxt = "n", las = 1,
       ylim = c (y.min, y.max), xlab = "", ylab = svh.ylab, type = "n")
 axis (1, at = c (2, 5, 8), tick = FALSE, labels = chair.lab)
-polygon (c (3.5, 6.5, 6.5, 3.5), c (-50, -50, 38, 38), col = "#eeeeee",
+polygon (c (3.5, 6.5, 6.5, 3.5), c (-50, -50, 38, 38), col = gray.box,
          border = NA)
 for (i in seq (1, 3))
     lines (rep ((i - 1) * 3 + 2, 2), pred [i] + se [i] * c(-1, 1), lwd = 3)
@@ -355,7 +358,7 @@ df.ca <- subset(room.126, stimulus == "object" & chair == "upright")
 delta.ca <- aggregate (threshold ~ subject,
                        aggregate (threshold ~ subject * background, df.ca, mean),
                        diff)
-pdf (file = "Fig-3.pdf", width = 5, height = 5)
+pdf (file = "Fig-3.pdf", width = pdf.wd, height = pdf.ht)
 par (mar = c (5, 4, 0, 0))
 plot (delta.hor$threshold, delta.ca$threshold, bty = "n", las = 1, pch = 19,
       xlab = dsvh.xlab, ylab = dca.ylab, type = "n")
@@ -387,7 +390,7 @@ for (i in c (1, 2)) {
              col = rep (obj.col, 2), add = (i == 2))
     if (i == 1)
         polygon (c (3.5, 6.5, 6.5, 3.5), c (0, 0, 100, 100),
-                 col = "#eeeeee", border = NA)
+                 col = gray.box, border = NA)
 }
 axis (1, at = c (2, 5), tick = FALSE, labels = scene.lab)
 legend ("topright", inset = 0.05, pch = 22, pt.cex = 2, pt.bg = obj.col,
@@ -420,12 +423,12 @@ se <- aggregate (residuals ~ object.num * table.side.num, scene.mirror.obj,
                  function (x) sd (x) / sqrt (length (x)))$residuals
 y.min <- min (pred - se)
 y.max <- max (pred + se)
-pdf (file = "Fig-5-a.pdf", width = 5, height = 5)
+pdf (file = "Fig-5-a.pdf", width = pdf.wd, height = pdf.ht)
 par (mar = c (4.5, 5, 2.0, 0))
 plot (0, 0, type = "n", xlim = c (0.5, 6.5), bty = "n", xaxt = "n", las = 1,
       ylim = c (y.min, y.max), xlab = "", ylab = ca.ylab)
 axis (1, at = c (2, 5), tick = FALSE, labels = scene.lab)
-polygon (c (3.5, 6.5, 6.5, 3.5), c (-50, -50, 38, 38), col = "#eeeeee",
+polygon (c (3.5, 6.5, 6.5, 3.5), c (-50, -50, 38, 38), col = gray.box,
          border = NA)
 for (i in seq (1, 6))
     lines (rep (i, 2), pred [i] + se [i] * c(-1, 1), lwd = 3)
@@ -441,7 +444,7 @@ re <- ranef (fm.scene.mirror)$subject
 n <- nrow (re)
 fe <- fixef (fm.scene.mirror)
 
-pdf (file = "Fig-5-b.pdf", width = 5, height = 5)
+pdf (file = "Fig-5-b.pdf", width = pdf.wd, height = pdf.ht)
 par (mar = c (5, 5.5, 2, 0.1))
 x <- re [,1] + fe [1]
 y <- -2 * (re [,2]  + fe [3])
@@ -476,7 +479,7 @@ for (i in c (1, 2)) {
              pars = list (boxwex  = 0.4, bty = "n"), add = (i == 2))
     if (i == 1)
         polygon (c (2.5, 4.5, 4.5, 2.5), c (-50, -50, 50, 50),
-                 col = "#eeeeee", border = NA)
+                 col = gray.box, border = NA)
 }
 axis (1, at = c (1.5, 3.5), tick = FALSE, labels = bg.lab)
 legend ("topleft", inset = 0.05, pch = 22, pt.cex = 2, pt.bg = side.col,
@@ -507,7 +510,7 @@ for (i in c (1, 2)) {
              pars = list (boxwex  = 0.4, bty = "n"), add = (i == 2))
     if (i == 1)
         polygon (c (2.5, 4.5, 4.5, 2.5), c (-50, -50, 50, 50),
-                 col = "#eeeeee", border = NA)
+                 col = gray.box, border = NA)
 }
 axis (1, at = c (1.5, 3.5), tick = FALSE, labels = bg.lab)
 legend ("bottomleft", inset = 0.05, pch = 22, pt.cex = 2, pt.bg = side.col,
@@ -534,7 +537,7 @@ for (i in c (1, 2)) {
              pars = list (boxwex  = 0.4, bty = "n"), add = (i == 2))
     if (i == 1)
         polygon (c (2.5, 4.5, 4.5, 2.5), c (-50, -50, 50, 50),
-                 col = "#eeeeee", border = NA)
+                 col = gray.box, border = NA)
 }
 axis (1, at = c (1.5, 3.5), tick = FALSE,
       labels = c ("table to the left", "table to the right"))
@@ -565,7 +568,7 @@ for (i in c (1, 2)) {
              col = rep (obj.col, 2), add = (i == 2))
     if (i == 1)
         polygon (c (3.5, 6.5, 6.5, 3.5), c (0, 0, 100, 100),
-                 col = "#eeeeee", border = NA)
+                 col = gray.box, border = NA)
 }
 axis (1, at = c (2, 5), tick = FALSE, labels = bg.lab)
 legend ("topright", inset = 0.05, pch = 22, pt.cex = 2, pt.bg = obj.col,
@@ -616,7 +619,7 @@ axis (1, at = c (3.5, 9.5), labels = c ("With Table", "Without Table"),
       line = 1)
 for (i in c (1, 2)) {
     polygon (6 * (i - 1) + c (3.5, 6.5, 6.5, 3.5),
-             c (0, 0, 100, 100), col = "#eeeeee", border = NA)
+             c (0, 0, 100, 100), col = gray.box, border = NA)
     axis (3, at = 6 * (i - 1) + c (2, 5), line = 1,
           labels = c ("Static", "Rotating"))
 }
