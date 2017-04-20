@@ -71,6 +71,7 @@ fm.r126.chair.obj <- lmer (threshold ~ object.num * chair.num
 
 anova (fm.r126.chair.obj)
 fixef (fm.r126.chair.obj)
+confint (fm.r126.chair.obj)
 
 pdf (file = "room-126-chair-object.pdf")
 par (mar = c (4, 5, 0.5, 0))
@@ -95,6 +96,7 @@ fm.r126.bg.obj <- lmer (threshold ~ background * object.num
                         + (1 | subject), df.r126.bg.obj)
 anova (fm.r126.bg.obj)
 fixef (fm.r126.bg.obj)
+confint (fm.r126.bg.obj)
 
 fe.r126.bg.obj <- fixef (fm.r126.bg.obj)
 re.r126.bg.obj <- ranef (fm.r126.bg.obj)
@@ -118,8 +120,10 @@ dummy <- dev.off ()
 df.r126.bg.hor <- subset (room.126,
                           stimulus == "horizontal" & chair == "upright")
 fm.r126.bg.hor <- lmer (threshold ~ background + (1 | subject), df.r126.bg.hor)
+
 anova (fm.r126.bg.hor)
 fixef (fm.r126.bg.hor)
+confint (fm.r126.bg.hor)
 
 fe.r126.bg.hor <- fixef (fm.r126.bg.hor)
 re.r126.bg.hor <- ranef (fm.r126.bg.hor)
@@ -138,8 +142,10 @@ df.r126.chair.hor <- subset (room.126,
 df.r126.chair.hor$object <- factor (as.character (df.r126.chair.hor$object))
 fm.r126.chair.hor <- lmer (threshold ~ chair.num + (0 + chair.num | subject),
                            df.r126.chair.hor)
+
 anova (fm.r126.chair.hor)
 fixef (fm.r126.chair.hor)
+confint (fm.r126.chair.hor)
 
 pdf (file = "room-126-chair-horizontal.pdf")
 par (mar = c (4, 5, 0.5, 0))
