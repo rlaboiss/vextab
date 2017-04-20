@@ -268,7 +268,7 @@ polygon (c (3.5, 6.5, 6.5, 3.5), c (-50, -50, y.max, y.max), col = gray.box,
 points (pred, pch = obj.pch, cex = obj.cex)
 for (i in seq (1, 6))
     lines (rep (i, 2), ci [i, ], lwd = 3)
-legend ("bottomleft", inset = c (0.05, 0.1), pch = obj.pch, bty = "n",
+legend ("bottomleft", inset = c (0.05, 0.05), pch = obj.pch, bty = "n",
         pt.cex = 0.75 * obj.cex, legend = com.lab)
 par (xpd = NA)
 text (-0.2, y.max, adj = c (0, 0), labels = "a", cex = 2)
