@@ -46,10 +46,10 @@ table.lab <- c ("Table to the Left", "Table to the Right")
 com.lab <- c ("Low COM", "Mid COM", "High COM")
 
 ### *** Labels for the axes
-dsvh.xlab <- expression (paste (Delta, "SVH (degrees)"))
+dsvh.xlab <- expression (paste (Delta, "TU (degrees)"))
 dca.ylab = expression (paste (Delta, "CA (degrees)"))
 ca.ylab <- "Critical Angle (degrees)"
-svh.ylab <- "Subjective Visual Horizontal (degrees)"
+svh.ylab <- "Table Uprightness (degrees)"
 
 ### ** Experiments
 
