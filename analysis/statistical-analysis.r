@@ -40,7 +40,7 @@ boxplot.ylab <- "threshold angle (degrees)"
 
 ### *** Labels for the conditions
 chair.lab <- c ("Left Tilt", "Upright", "Right Tilt")
-bg.lab <- c ("Static Periphery", "Rotating Periphery")
+bg.lab <- c ("Static Surround", "Rotating Surround")
 scene.lab <- c ("Scene on the Left", "Scene on the Right")
 table.lab <- c ("Table to the Left", "Table to the Right")
 com.lab <- c ("Low COM", "Mid COM", "High COM")
