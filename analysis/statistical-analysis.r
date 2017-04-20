@@ -252,16 +252,13 @@ pdf.wd <- 4.5
 pdf.ht <- 4.5
 
 ### ***** Panel A
-pred <- predict (fm.r126.bg.obj,
-                 expand.grid (object.num  = c (-1, 0, 1),
-                              background = c ("static", "vection")),
-                 re.form = NA)
-se <- aggregate (residuals ~ object.num * background,
-                 df.r126.bg.obj,
-                 function (x) sd (x) / sqrt (length (x)))$residuals
-y.min <- 27.5
-y.max <- 37
-pdf (file = "Fig-2-a.pdf", width = 5, height = 5)
+nd <- expand.grid (object.num  = c (-1, 0, 1),
+                   background = c ("static", "vection"))
+pred <- predict (fm.r126.bg.obj, nd, re.form = NA)
+ci <- ci.pred (fm.r126.bg.obj, nd)$ci
+y.min <- 26
+y.max <- 39
+pdf (file = "Fig-2-a.pdf", width = pdf.wd, height = pdf.ht)
 par (mar = c (2, 4, 1, 0))
 plot (0, 0, xlim = c (0.5, 6.5), bty = "n", xaxt = "n", las = 1,
       ylim = c (y.min, y.max), xlab = "", ylab = ca.ylab, type = "n")
@@ -270,47 +267,19 @@ polygon (c (3.5, 6.5, 6.5, 3.5), c (-50, -50, y.max, y.max), col = gray.box,
          border = NA)
 points (pred, pch = obj.pch, cex = obj.cex)
 for (i in seq (1, 6))
-    lines (rep (i, 2), pred [i] + se [i] * c(-1, 1), lwd = 3)
+    lines (rep (i, 2), ci [i, ], lwd = 3)
 legend ("bottomleft", inset = c (0.05, 0.1), pch = obj.pch, bty = "n",
         pt.cex = 0.75 * obj.cex, legend = com.lab)
 par (xpd = NA)
 text (-0.2, y.max, adj = c (0, 0), labels = "a", cex = 2)
 dummy <- dev.off ()
 
-### ***** Panel B
-pred <- predict (fm.r126.bg.hor,
-                 expand.grid (background = c ("static", "vection")),
-                 re.form = NA)
-se <- aggregate (residuals ~ background, df.r126.bg.hor,
-                 function (x) sd (x) / sqrt (length (x)))$residuals
-y.min <- -4
-y.max <- 7
-pdf (file = "Fig-2-b.pdf", width = 5, height = 4)
-par (mar = c (4.5, 4, 2.0, 0))
-plot (0, 0, xlim = c (0.5, 6.5), bty = "n", xaxt = "n", las = 1,
-      ylim = c (y.min, y.max), xlab = "", ylab = svh.ylab, type = "n")
-axis (1, at = c (2, 5), tick = FALSE, labels = bg.lab)
-polygon (c (3.5, 6.5, 6.5, 3.5), c (-50, -50, y.max, y.max), col = gray.box,
-         border = NA)
-for (i in seq (1, 2))
-    lines (rep ((i - 1) * 3 + 2, 2), pred [i] + se [i] * c(-1, 1), lwd = 3)
-points (c (2, 5), pred, pch = 21, cex = 1.8, bg = "white")
-par (xpd = NA)
-text (-0.2, y.max + 0.8, adj = c (0, -0.2), labels = "b", cex = 2)
-dummy <- dev.off ()
-
 ### ***** Panel C
-pred <- predict (fm.r126.chair.obj,
-                 expand.grid (object.num  = c (-1, 0, 1),
-                              chair.num = c (-1, 0, 1)),
-                 re.form = NA)
-se <- aggregate (residuals ~ object.num * chair.num,
-                 df.r126.chair.obj,
-                 function (x) sd (x) / sqrt (length (x)))$residuals
-pdf (file = "Fig-2-c.pdf", width = 5, height = 5)
+nd <- expand.grid (object.num  = c (-1, 0, 1), chair.num = c (-1, 0, 1))
+pred <- predict (fm.r126.chair.obj, nd, re.form = NA)
+ci <- ci.pred (fm.r126.chair.obj, nd)$ci
+pdf (file = "Fig-2-c.pdf", width = pdf.wd, height = pdf.ht)
 par (mar = c (2, 4, 1, 0))
-y.min <- 27.5
-y.max <- 37
 plot (0, 0, xlim = c (0.5, 9.5), bty = "n", xaxt = "n", las = 1, type = "n",
       ylim = c (y.min, y.max), xlab = "", ylab = ca.ylab)
 axis (1, at = c (2, 5, 8), tick = FALSE, labels = chair.lab)
@@ -318,19 +287,35 @@ polygon (c (3.5, 6.5, 6.5, 3.5), c (-50, -50, y.max, y.max), col = gray.box,
          border = NA)
 points (pred, pch = obj.pch, cex = obj.cex)
 for (i in seq (1, 9))
-    lines (rep (i, 2), pred [i] + se [i] * c(-1, 1), lwd = 3)
+    lines (rep (i, 2), ci [i, ], lwd = 3)
 par (xpd = NA)
 text (-0.2, y.max, adj = c (0, -0.2), labels = "c", cex = 2)
 dummy <- dev.off ()
 
+### ***** Panel B
+nd <- expand.grid (background = c ("static", "vection"))
+pred <- predict (fm.r126.bg.hor, nd, re.form = NA)
+ci <- ci.pred (fm.r126.bg.hor, nd)$ci
+y.min <- -5
+y.max <- 8
+pdf (file = "Fig-2-b.pdf", width = 5, height = 4)
+par (mar = c (4.5, 4, 2.0, 0))
+plot (0, 0, xlim = c (0.5, 6.5), bty = "n", xaxt = "n", las = 1,
+      ylim = c (y.min, y.max), xlab = "", ylab = svh.ylab, type = "n")
+axis (1, at = c (2, 5), tick = FALSE, labels = bg.lab)
+polygon (c (3.5, 6.5, 6.5, 3.5), c (-50, -50, 38, 38), col = gray.box,
+         border = NA)
+for (i in seq (1, 2))
+    lines (rep ((i - 1) * 3 + 2, 2), ci [i, ], lwd = 3)
+points (c (2, 5), pred, pch = 21, cex = 1.8, bg = "white")
+par (xpd = NA)
+text (-0.2, y.max + 1.2, adj = c (0, -0.2), labels = "b", cex = 2)
+dummy <- dev.off ()
+
 ### ***** Panel D
-pred <- predict (fm.r126.chair.hor,
-                 expand.grid (chair.num = c (-1, 0, 1)),
-                 re.form = NA)
-se <- aggregate (residuals ~ chair.num, df.r126.chair.hor,
-                 function (x) sd (x) / sqrt (length (x)))$residuals
-y.min <- -4
-y.max <- 7
+nd <- expand.grid (chair.num = c (-1, 0, 1))
+pred <- predict (fm.r126.chair.hor, nd, re.form = NA)
+ci <- ci.pred (fm.r126.chair.hor, nd)$ci
 pdf (file = "Fig-2-d.pdf", width = 5, height = 4)
 par (mar = c (4.5, 5, 2.0, 0))
 plot (0, 0, xlim = c (0.5, 9.5), bty = "n", xaxt = "n", las = 1,
@@ -339,10 +324,10 @@ axis (1, at = c (2, 5, 8), tick = FALSE, labels = chair.lab)
 polygon (c (3.5, 6.5, 6.5, 3.5), c (-50, -50, 38, 38), col = gray.box,
          border = NA)
 for (i in seq (1, 3))
-    lines (rep ((i - 1) * 3 + 2, 2), pred [i] + se [i] * c(-1, 1), lwd = 3)
+    lines (rep ((i - 1) * 3 + 2, 2), ci [i, ], lwd = 3)
 points (c (2, 5, 8), pred, pch = 21, cex = 1.8, bg = "white")
 par (xpd = NA)
-text (-0.2, y.max + 0.8, adj = c (0, -0.2), labels = "d", cex = 2)
+text (-0.2, y.max + 1.2, adj = c (0, -0.2), labels = "d", cex = 2)
 dummy <- dev.off ()
 
 ### ***** Compose Figure
@@ -602,15 +587,13 @@ legend ("right", col = c ("red", "blue"), legend = c ("rotating", "static"),
 dummy <- dev.off ()
 
 ### ***** Plot the results
-pred <- predict (fm.no.table, expand.grid (object.num = c (-1, 0, 1),
-                                           background = c ("static", "vection"),
-                                           table.side = c ("left", "none")),
-                 re.form = NA)
-no.table$residuals <- residuals (fm.no.table)
-se <- aggregate (residuals ~ object.num * table.side * background,
-                 no.table, function (x) sd (x) / sqrt (length (x)))$residuals
-y.min <- min (pred - se)
-y.max <- max (pred + se)
+nd <- expand.grid (object.num = c (-1, 0, 1),
+                   background = c ("static", "vection"),
+                   table.side = c ("left", "none"))
+pred <- predict (fm.no.table, nd, re.form = NA)
+ci <- ci.pred (fm.no.table, nd)$ci
+y.min <- min (ci [, 1])
+y.max <- max (ci [, 2])
 pdf (file = "Fig-6.pdf", width = 7, height = 5)
 par (mar = c (4.5, 5, 4.5, 0), xpd = FALSE)
 plot (0, 0, type = "n", xlim = c (0.5, 12.5), bty = "n", xaxt = "n", las = 1,
@@ -624,7 +607,7 @@ for (i in c (1, 2)) {
           labels = c ("Static", "Rotating"))
 }
 for (i in seq (1, 12))
-    lines (rep (i, 2), pred [i] + se [i] * c(-1, 1), lwd = 3)
+    lines (rep (i, 2), ci [i, ], lwd = 3)
 points (pred, pch = obj.pch, cex = obj.cex)
 legend ("topleft", inset = c (0.05, 0), pch = obj.pch, pt.cex = 0.75 * obj.cex,
         bty = "n", legend = com.lab)
