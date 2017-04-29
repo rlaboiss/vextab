@@ -359,19 +359,19 @@ dummy <- dev.off ()
 ### *** Scene mirror
 
 ### **** Select the data
-scene.mirror <- subset (obj.stab.psycho, experiment == "scene-mirror")
-scene.mirror$subject <- factor (as.character (scene.mirror$subject))
+df.scene.mirror <- subset (obj.stab.psycho, experiment == "scene-mirror")
+df.scene.mirror$subject <- factor (as.character (df.scene.mirror$subject))
 
 ### **** Effect of object CG height and secene side
 
 ### ***** Extract the data
-scene.mirror.obj <- subset (scene.mirror, stimulus == "object")
+df.scene.mirror.obj <- subset (df.scene.mirror, stimulus == "object")
 
 ### ***** Plot the raw results
 pdf (file = "scene-mirror-object.pdf")
 par (mar = c (4, 5, 0.5, 0))
 for (i in c (1, 2)) {
-    boxplot (threshold ~ object.num * object.side, scene.mirror.obj,
+    boxplot (threshold ~ object.num * object.side, df.scene.mirror.obj,
              frame = FALSE, las = 1, xlab = "", ylab = boxplot.ylab,
              xaxt = "n", pars = boxplot.pars,
              col = rep (obj.col, 2), add = (i == 2))
@@ -385,27 +385,26 @@ legend ("topright", inset = 0.05, pch = 22, pt.cex = 2, pt.bg = obj.col,
 dummy <- dev.off ()
 
 ### ***** Fit the model
-fm.scene.mirror <- lmer (threshold ~ object.num * table.side.num
-                                     + (table.side.num | subject),
-                         scene.mirror.obj)
-show (anova (fm.scene.mirror))
-show (fixef (fm.scene.mirror))
-show (ranef (fm.scene.mirror))
+fm.scene.mirror.obj <- lmer (threshold ~ object.num * table.side.num
+                                         + (table.side.num | subject),
+                             df.scene.mirror.obj)
+show (anova (fm.scene.mirror.obj))
+show (fixef (fm.scene.mirror.obj))
+show (ranef (fm.scene.mirror.obj))
 
 fm.no.Intercept <- lmer (threshold ~ object.num * table.side.num
                                      + (0 + table.side.num | subject),
-                         scene.mirror.obj)
+                         df.scene.mirror.obj)
 fm.no.table.side.num <- lmer (threshold ~ object.num * table.side.num
                                           + (1 | subject),
-                              scene.mirror.obj)
-show (anova (fm.no.Intercept, fm.scene.mirror))
-show (anova (fm.no.table.side.num, fm.scene.mirror))
+                              df.scene.mirror.obj)
+show (anova (fm.no.Intercept, fm.scene.mirror.obj))
+show (anova (fm.no.table.side.num, fm.scene.mirror.obj))
 
 ### ***** Plot the results
-nd <- expand.grid (object.num = c (-1, 0, 1),
-                   table.side.num = c (-1, 1))
-pred <- predict (fm.scene.mirror, nd, re.form = NA)
-ci <- ci.pred (fm.scene.mirror, nd)$ci
+nd <- expand.grid (object.num = c (-1, 0, 1), table.side.num = c (-1, 1))
+pred <- predict (fm.scene.mirror.obj, nd, re.form = NA)
+ci <- ci.pred (fm.scene.mirror.obj, nd)$ci
 y.min <- min (ci [, 1])
 y.max <- max (ci [, 2])
 pdf (file = "Fig-5-a.pdf", width = pdf.wd, height = pdf.ht)
@@ -425,9 +424,9 @@ text (-0.2, y.max + 0.8, adj = c (0, -0.2), labels = "a", cex = 2)
 dummy <- dev.off ()
 
 ### ***** Plot the BLUP
-re <- ranef (fm.scene.mirror)$subject
+re <- ranef (fm.scene.mirror.obj)$subject
 n <- nrow (re)
-fe <- fixef (fm.scene.mirror)
+fe <- fixef (fm.scene.mirror.obj)
 
 pdf (file = "Fig-5-b.pdf", width = pdf.wd, height = pdf.ht)
 par (mar = c (5, 5.5, 2, 0.1))
@@ -451,14 +450,14 @@ system (paste ("pdfjam Fig-5-a.pdf Fig-5-b.pdf",
 system ("pdfcrop --margins 10 tmp.pdf Fig-5.pdf")
 
 ### **** Effect of background on horizontal detection
-scene.mirror.hor <- subset (scene.mirror, stimulus == "horizontal")
-idx <- which (scene.mirror.hor$table.side == "right")
-scene.mirror.hor$threshold [idx] <- -scene.mirror.hor$threshold [idx]
+df.scene.mirror.hor <- subset (df.scene.mirror, stimulus == "horizontal")
+idx <- which (df.scene.mirror.hor$table.side == "right")
+df.scene.mirror.hor$threshold [idx] <- -df.scene.mirror.hor$threshold [idx]
 
 pdf (file = "scene-mirror-horizontal.pdf")
 par (mar = c (4, 5, 0.5, 0))
 for (i in c (1, 2)) {
-    boxplot (threshold ~ table.side * background, scene.mirror.hor,
+    boxplot (threshold ~ table.side * background, df.scene.mirror.hor,
              frame = FALSE, las = 1, xlab = "", ylab = boxplot.ylab,
              col = rep (side.col, 2), xaxt = "n",
              pars = list (boxwex  = 0.4, bty = "n"), add = (i == 2))
@@ -471,11 +470,11 @@ legend ("topleft", inset = 0.05, pch = 22, pt.cex = 2, pt.bg = side.col,
         legend = table.lab)
 dummy <- dev.off ()
 
-fm <- lmer (threshold ~ table.side.num * background + (1 | subject),
-            scene.mirror.hor)
-show (anova (fm))
-show (fixef (fm))
-show (ranef (fm))
+fm.scene.mirror.hor <- lmer (threshold ~ table.side.num * background + (1 | subject),
+                             df.scene.mirror.hor)
+show (anova (fm.scene.mirror.hor))
+show (fixef (fm.scene.mirror.hor))
+show (ranef (fm.scene.mirror.hor))
 
 ### *** Flip table
 
