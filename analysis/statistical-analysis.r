@@ -471,7 +471,8 @@ legend ("topleft", inset = 0.05, pch = 22, pt.cex = 2, pt.bg = side.col,
         legend = table.lab)
 dummy <- dev.off ()
 
-fm.scene.mirror.hor <- lmer (threshold ~ table.side.num * background + (1 | subject),
+fm.scene.mirror.hor <- lmer (threshold ~ table.side.num * background
+                                         + (1 | subject),
                              df.scene.mirror.hor)
 show (anova (fm.scene.mirror.hor))
 show (fixef (fm.scene.mirror.hor))
