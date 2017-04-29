@@ -386,7 +386,8 @@ dummy <- dev.off ()
 
 ### ***** Fit the model
 fm.scene.mirror.obj <- lmer (threshold ~ object.num * table.side.num
-                                         + (table.side.num | subject),
+                                         + (1 | subject)
+                                         + (0 + table.side.num | subject),
                              df.scene.mirror.obj)
 show (anova (fm.scene.mirror.obj))
 show (fixef (fm.scene.mirror.obj))
