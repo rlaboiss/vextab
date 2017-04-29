@@ -25,7 +25,7 @@ obj.stab.psycho <- read.csv ("obj-stab-psycho.csv")
 ### ** Transform the discrete factors chair and object into numeric
 obj.stab.psycho$object.num <- c (1, -1, 0) [as.numeric(obj.stab.psycho$object)]
 obj.stab.psycho$chair.num <- c (-1, 1, 0) [as.numeric (obj.stab.psycho$chair)]
-obj.stab.psycho$table.side.num <- (c (-1, 0, 1)
+obj.stab.psycho$table.side.num <- (c (-0.5, 0, 0.5)
                                    [as.numeric (obj.stab.psycho$table.side)])
 
 ### ** Boxplot parameters
@@ -402,7 +402,7 @@ show (anova (fm.no.Intercept, fm.scene.mirror.obj))
 show (anova (fm.no.table.side.num, fm.scene.mirror.obj))
 
 ### ***** Plot the results
-nd <- expand.grid (object.num = c (-1, 0, 1), table.side.num = c (-1, 1))
+nd <- expand.grid (object.num = c (-1, 0, 1), table.side.num = c (-0.5, 0.5))
 pred <- predict (fm.scene.mirror.obj, nd, re.form = NA)
 ci <- ci.pred (fm.scene.mirror.obj, nd)$ci
 y.min <- min (ci [, 1])
@@ -431,13 +431,14 @@ fe <- fixef (fm.scene.mirror.obj)
 pdf (file = "Fig-5-b.pdf", width = pdf.wd, height = pdf.ht)
 par (mar = c (5, 5.5, 2, 0.1))
 x <- re [,1] + fe [1]
-y <- -2 * (re [,2]  + fe [3])
+y <- - (re [,2]  + fe [3])
+show (max (y))
 y.min <- min (y)
 y.max <- 18
 plot (x, y, pch = 19, cex = 1.5, las = 1,  xlim = c (15, 40), col = "#00000080",
       bty = "n", xlab = "Mean Critical Angle (degrees)",
       ylab = "Left/Right Side Effect (degrees)")
-abline (h = -2 * fe [3], col = "#00000080", lwd = 2, lty = "21")
+abline (h = -fe [3], col = "#00000080", lwd = 2, lty = "21")
 abline (v = fe [1], col = "#00000080", lwd = 2, lty = "21")
 par (xpd = NA)
 text (14, 18, adj = c (1, 0), labels = "b", cex = 2)
