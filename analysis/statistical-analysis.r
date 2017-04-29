@@ -412,7 +412,7 @@ par (mar = c (4.5, 5, 2.0, 0))
 plot (0, 0, type = "n", xlim = c (0.5, 6.5), bty = "n", xaxt = "n", las = 1,
       ylim = c (y.min, y.max), xlab = "", ylab = ca.ylab)
 axis (1, at = c (2, 5), tick = FALSE, labels = scene.lab)
-polygon (c (3.5, 6.5, 6.5, 3.5), c (-50, -50, 38, 38), col = gray.box,
+polygon (c (3.5, 6.5, 6.5, 3.5), c (-50, -50, 42, 42), col = gray.box,
          border = NA)
 for (i in seq (1, 6))
     lines (rep (i, 2), ci [i, ], lwd = 3)
@@ -435,13 +435,13 @@ y <- - (re [,2]  + fe [3])
 show (max (y))
 y.min <- min (y)
 y.max <- 18
-plot (x, y, pch = 19, cex = 1.5, las = 1,  xlim = c (15, 40), col = "#00000080",
+plot (x, y, pch = 19, cex = 1.5, las = 1,  xlim = c (20, 40), col = "#00000080",
       bty = "n", xlab = "Mean Critical Angle (degrees)",
       ylab = "Left/Right Side Effect (degrees)")
 abline (h = -fe [3], col = "#00000080", lwd = 2, lty = "21")
 abline (v = fe [1], col = "#00000080", lwd = 2, lty = "21")
 par (xpd = NA)
-text (14, 18, adj = c (1, 0), labels = "b", cex = 2)
+text (20, 14.5, adj = c (1, 0), labels = "b", cex = 2)
 dummy <- dev.off ()
 
 ### ***** Compose the Fig. 5
