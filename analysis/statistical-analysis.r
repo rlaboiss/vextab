@@ -600,14 +600,18 @@ pdf (file = "Fig-6.pdf", width = 7, height = 5)
 par (mar = c (4.5, 5, 4.5, 0), xpd = FALSE)
 plot (0, 0, type = "n", xlim = c (0.5, 12.5), bty = "n", xaxt = "n", las = 1,
       ylim = c (y.min, y.max), xlab = "", ylab = ca.ylab)
-axis (1, at = c (3.5, 9.5), labels = c ("With Table", "Without Table"),
-      line = 1)
+group.axis <- function (pos, at, lab) {
+    axis (pos, at = at, labels = rep ("", 2), line = 1)
+    axis (pos, at = mean (at), tick = FALSE, line = 0.5, labels = lab)
+}
 for (i in c (1, 2)) {
     polygon (6 * (i - 1) + c (3.5, 6.5, 6.5, 3.5),
              c (0, 0, 100, 100), col = gray.box, border = NA)
-    axis (3, at = 6 * (i - 1) + c (2, 5), line = 1,
-          labels = c ("Static", "Rotating"))
+    group.axis (3, at = 6 * (i - 1) + c (1, 3), "Static")
+    group.axis (3, at = 6 * (i - 1) + c (4, 6), "Rotating")
 }
+group.axis (1, c (1, 6), "With Table")
+group.axis (1, c (7, 12), "Without Table")
 for (i in seq (1, 12))
     lines (rep (i, 2), ci [i, ], lwd = 3)
 points (pred, pch = obj.pch, cex = obj.cex)
