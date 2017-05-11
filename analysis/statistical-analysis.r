@@ -568,6 +568,7 @@ fm.no.table <- lmer (threshold ~ background * object.num * table.side
 show (anova (fm.no.table))
 show (fixef (fm.no.table))
 show (ranef (fm.no.table))
+show (confint (fm.no.table))
 
 fe <- fixef (fm.no.table)
 
