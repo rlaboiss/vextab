@@ -116,6 +116,34 @@ legend ("topright", inset = 0.05, pch = 22, pt.cex = 2, pt.bg = obj.col,
         legend = com.lab)
 dummy <- dev.off ()
 
+### ***** Power analysis
+
+### ****** Home-made simulation
+### (Taken from the web somewhere.  Look at https://goo.gl/zOUgFy)
+nsim <- 1000
+p.value <- rep (NA, nsim)
+sim.r126.bg.obj <- simulate (fm.r126.bg.obj, nsim = nsim)
+
+cat ("Computing power effect for Exp. 1 (surround effect)\n")
+flush.console ()
+
+for (i in seq (1, nsim)) {
+    df <- df.r126.bg.obj
+    df$threshold <- sim.r126.bg.obj [, i]
+    fm <- lmer (threshold ~ background * object.num + (1 | subject), df)
+    p.value [i] <- anova (fm) [["Pr(>F)"]] [1]
+    cat (sprintf ("\r%4d", i))
+    flush.console ()
+}
+
+cat (sprintf ("Power for surround effect is %f\n",
+              (nsim - length (which (p.value > 0.05))) / nsim))
+flush.console ()
+
+### ****** Using SIMR package
+library (simr)
+powerSim (fm.r126.bg.obj, test = fixed ("background"), nsim = 100)
+
 ### ***** Effect of background in upright position on horizontal estimation
 df.r126.bg.hor <- subset (room.126,
                           stimulus == "horizontal" & chair == "upright")
