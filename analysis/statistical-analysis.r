@@ -5,6 +5,7 @@
 library (lme4)
 library (lmerTest)
 library (HDInterval)
+library (shape)
 
 ### ** Function for computing confidence intervals of predicted values
 ci.pred <- function (fit.model, new.data = NA, pred.fun = NA, nb.sim = 1000) {
@@ -478,6 +479,35 @@ system (paste ("pdfjam Fig-5-a.pdf Fig-5-b.pdf",
                "--no-landscape --frame true --nup 2x1 --frame false",
                "--outfile tmp.pdf"))
 system ("pdfcrop --margins 10 tmp.pdf Fig-5.pdf")
+
+### ***** Check age effect on the random factors
+subjects <- read.csv ("cohort-info.csv")
+age <- sapply (row.names(re),
+               function (x)
+                   subjects$age [which (x == as.character (subjects$subject))])
+pdf (file = "scene-mirror-ranef-age.pdf")
+par (xpd = NA)
+plot ( fe [1] + re [, 1], -(fe [3] + re [, 2]), bty = "n",
+      las = 1, col = "#00000080", pch = 19,
+      cex = 1 + 5 * (age - min (age)) / (max (age) - min (age)),
+      xlab = "individual intercept effect (degrees)",
+      ylab = "individual table-sode effect (degrees)")
+legend.years <- c (20, 30)
+legend.cex <- 1 + 5 * (legend.years - min (age)) / (max (age) - min (age))
+legend ("topleft", inset = 0.2, pt.cex = legend.cex, pch = 1, cex = 1.8,
+        legend = sapply (legend.years, function (x) sprintf ("%.0f years", x)),
+        text.col = "#bbbbbb")
+Arrows (19, 0, 19, -5, lwd = 2, col = "red")
+text (19.5, -2.5, label = "- gravity", adj = c (0.5, 1), srt = 90, col = "red",
+      cex = 1.2)
+Arrows (19, 8, 19, 13, lwd = 2, col = "red")
+text (19.5, 10.5, label = "+ gravity", adj = c (0.5, 1), srt = 90, col = "red",
+      cex = 1.2)
+Arrows (24, 15, 20, 15, lwd = 2, col = "red")
+text (22, 15.5, label = "cautious", adj = c (0.5, 0), col = "red", cex = 1.2)
+Arrows (32, 15, 36, 15, lwd = 2, col = "red")
+text (34, 15.5, label = "risky", adj = c (0.5, 0), col = "red", cex = 1.2)
+dummy <- dev.off ()
 
 ### **** Effect of background on horizontal detection
 df.scene.mirror.hor <- subset (df.scene.mirror, stimulus == "horizontal")
