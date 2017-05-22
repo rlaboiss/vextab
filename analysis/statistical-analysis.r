@@ -6,6 +6,7 @@ library (lme4)
 library (lmerTest)
 library (HDInterval)
 library (shape)
+library (car)
 
 ### ** Function for computing confidence intervals of predicted values
 ci.pred <- function (fit.model, new.data = NA, pred.fun = NA, nb.sim = 1000) {
@@ -508,6 +509,10 @@ text (22, 15.5, label = "cautious", adj = c (0.5, 0), col = "red", cex = 1.2)
 Arrows (32, 15, 36, 15, lwd = 2, col = "red")
 text (34, 15.5, label = "risky", adj = c (0.5, 0), col = "red", cex = 1.2)
 dummy <- dev.off ()
+
+### ****** Pilai statistical test
+fm.scene.mirror.age <- lm (cbind (fe [1] + re [, 1], -(fe [3] + re [, 2])) ~ age)
+Manova (fm.scene.mirror.age)
 
 ### **** Effect of background on horizontal detection
 df.scene.mirror.hor <- subset (df.scene.mirror, stimulus == "horizontal")
