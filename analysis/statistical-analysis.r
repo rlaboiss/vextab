@@ -682,3 +682,18 @@ points (pred, pch = obj.pch, cex = obj.cex)
 legend ("topleft", inset = c (0.05, 0), pch = obj.pch, pt.cex = 0.75 * obj.cex,
         bty = "n", legend = com.lab)
 dummy <- dev.off ()
+
+### ** Verify age effects for background effect in Exp. 1 and Exp. 3
+
+df.age <- subset (obj.stab.psycho,
+                  experiment %in% c ("room-126", "no-table")
+                  & table.side == "left" & chair == "upright"
+                  & subject != "S066" & stimulus == "object")
+fm.age <- lmer (threshold ~ background * object + (background | subject),
+                df.age)
+re <- ranef (fm.age)$subject
+age <- sapply (row.names (re),
+               function (x)
+                   subjects$age [which (x == as.character (subjects$subject))])
+cor.test (re [, 1], age)
+cor.test (re [, 2], age)
