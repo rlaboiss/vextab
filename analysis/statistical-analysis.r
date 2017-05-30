@@ -291,7 +291,7 @@ ci <- ci.pred (fm.r126.bg.obj, nd)$ci
 y.min <- 26
 y.max <- 39
 pdf (file = "Fig-2-a.pdf", width = pdf.wd, height = pdf.ht)
-par (mar = c (2, 4, 1, 0))
+par (mar = c (2, 4, 1, 1))
 plot (0, 0, xlim = c (0.5, 6.5), bty = "n", xaxt = "n", las = 1,
       ylim = c (y.min, y.max), xlab = "", ylab = ca.ylab, type = "n")
 axis (1, at = c (2, 5), tick = FALSE, labels = bg.lab)
@@ -311,7 +311,7 @@ nd <- expand.grid (object.num  = c (-1, 0, 1), chair.num = c (-1, 0, 1))
 pred <- predict (fm.r126.chair.obj, nd, re.form = NA)
 ci <- ci.pred (fm.r126.chair.obj, nd)$ci
 pdf (file = "Fig-2-c.pdf", width = pdf.wd, height = pdf.ht)
-par (mar = c (2, 4, 1, 0))
+par (mar = c (2, 4, 1, 1))
 plot (0, 0, xlim = c (0.5, 9.5), bty = "n", xaxt = "n", las = 1, type = "n",
       ylim = c (y.min, y.max), xlab = "", ylab = ca.ylab)
 axis (1, at = c (2, 5, 8), tick = FALSE, labels = chair.lab)
@@ -321,7 +321,7 @@ points (pred, pch = obj.pch, cex = obj.cex)
 for (i in seq (1, 9))
     lines (rep (i, 2), ci [i, ], lwd = 3)
 par (xpd = NA)
-text (-0.2, y.max, adj = c (0, -0.2), labels = "c", cex = 2)
+text (-0.2, y.max, adj = c (0, 0), labels = "c", cex = 2)
 dummy <- dev.off ()
 
 ### ***** Panel B
@@ -330,8 +330,8 @@ pred <- predict (fm.r126.bg.hor, nd, re.form = NA)
 ci <- ci.pred (fm.r126.bg.hor, nd)$ci
 y.min <- -5
 y.max <- 8
-pdf (file = "Fig-2-b.pdf", width = 5, height = 4)
-par (mar = c (4.5, 4, 2.0, 0))
+pdf (file = "Fig-2-b.pdf", width = pdf.wd, height = 0.8 * pdf.ht)
+par (mar = c (4.5, 4, 2.0, 1))
 plot (0, 0, xlim = c (0.5, 6.5), bty = "n", xaxt = "n", las = 1,
       ylim = c (y.min, y.max), xlab = "", ylab = svh.ylab, type = "n")
 axis (1, at = c (2, 5), tick = FALSE, labels = bg.lab)
@@ -348,8 +348,8 @@ dummy <- dev.off ()
 nd <- expand.grid (chair.num = c (-1, 0, 1))
 pred <- predict (fm.r126.chair.hor, nd, re.form = NA)
 ci <- ci.pred (fm.r126.chair.hor, nd)$ci
-pdf (file = "Fig-2-d.pdf", width = 5, height = 4)
-par (mar = c (4.5, 5, 2.0, 0))
+pdf (file = "Fig-2-d.pdf", width = pdf.wd, height = 0.8 * pdf.ht)
+par (mar = c (4.5, 5, 2.0, 1))
 plot (0, 0, xlim = c (0.5, 9.5), bty = "n", xaxt = "n", las = 1,
       ylim = c (y.min, y.max), xlab = "", ylab = svh.ylab, type = "n")
 axis (1, at = c (2, 5, 8), tick = FALSE, labels = chair.lab)
@@ -481,9 +481,11 @@ system (paste ("pdfjam Fig-5-a.pdf Fig-5-b.pdf",
                "--outfile tmp.pdf"))
 system ("pdfcrop --margins 10 tmp.pdf Fig-5.pdf")
 
-### ***** Check age effect on the random factors
+### **** Check age effect on the random factors
+
+### ****** Plot the ranef with age as size of points
 subjects <- read.csv ("cohort-info.csv")
-age <- sapply (row.names(re),
+age <- sapply (row.names (re),
                function (x)
                    subjects$age [which (x == as.character (subjects$subject))])
 pdf (file = "scene-mirror-ranef-age.pdf")
