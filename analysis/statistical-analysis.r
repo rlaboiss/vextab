@@ -488,7 +488,7 @@ age <- sapply (row.names(re),
                    subjects$age [which (x == as.character (subjects$subject))])
 pdf (file = "scene-mirror-ranef-age.pdf")
 par (xpd = NA)
-plot ( fe [1] + re [, 1], -(fe [3] + re [, 2]), bty = "n",
+plot (fe [1] + re [, 1], -(fe [3] + re [, 2]), bty = "n",
       las = 1, col = "#00000080", pch = 19,
       cex = 1 + 5 * (age - min (age)) / (max (age) - min (age)),
       xlab = "individual intercept effect (degrees)",
